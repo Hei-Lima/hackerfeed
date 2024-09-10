@@ -18,11 +18,24 @@ document.addEventListener('DOMContentLoaded', function() {
     function displayStory(story) {
         const storyElement = document.createElement('div');
         storyElement.className = 'story-container';
-        storyElement.innerHTML = `
-            <h2><a href="${story.url}" target="_blank">${story.title}</a></h2>
-            <p>by ${story.by}</p>
-            <p>${story.descendants} comments</p>
-        `;
+
+        const titleElement = document.createElement('h2');
+        const titleLink = document.createElement('a');
+        titleLink.href = story.url;
+        titleLink.target = '_blank';
+        titleLink.textContent = story.title;
+        titleElement.appendChild(titleLink);
+
+        const authorElement = document.createElement('p');
+        authorElement.textContent = `by ${story.by}`;
+
+        const commentsElement = document.createElement('p');
+        commentsElement.textContent = `${story.descendants} comments`;
+
+        storyElement.appendChild(titleElement);
+        storyElement.appendChild(authorElement);
+        storyElement.appendChild(commentsElement);
+
         storiesContainer.appendChild(storyElement);
     }
 

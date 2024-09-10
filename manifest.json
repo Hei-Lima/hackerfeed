@@ -18,7 +18,7 @@
     "browser_specific_settings": {
       "gecko": {
         "id": "hackerfeed@hei-lima.tech",
-        "strict_min_version": "54.0"
+        "strict_min_version": "79.0"
       }
     }
   }
