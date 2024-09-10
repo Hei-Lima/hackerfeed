@@ -16,10 +16,9 @@
       "default_icon": "icons/icon.png"
     },
     "browser_specific_settings": {
-        "gecko": {
-          "id": "hackerfeed@hei-lima.tech",
-          "strict_min_version": "42.0"
-        }
+      "gecko": {
+        "id": "hackerfeed@hei-lima.tech",
+        "strict_min_version": "54.0"
       }
+    }
   }
-  
