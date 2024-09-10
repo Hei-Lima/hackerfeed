@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackerfeed</title>
+    <link rel="stylesheet" href="css/pico.orange.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .theme-switch {
+            display: inline-block;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="container-fluid">
+        <ul>
+            <li><strong><a>Hackerfeed</a></strong></li>
+        </ul>
+        <ul>
+            <li>
+                <div class="theme-toggle-container">
+                    <label class="theme-switch">
+                        <input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle light & dark theme" />
+                    </label>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <main class="container">
+        <div class="search-container">
+            <div class="logo">Hackerfeed</div>
+            <div class="search-bar">
+                <form action="https://duckduckgo.com/" method="get" target="_blank">
+                    <input
+                        type="search"
+                        name="q"
+                        placeholder="Search Duck Duck Go"
+                        aria-label="Search"
+                    />
+                </form>
+            </div>
+        </div>
+        <div id="stories"></div>
+    </main>
+    <footer class="container-fluid">
+        <p>&copy; 2021 Hackerfeed</p>
+    <script src="js/scripts.js"></script>
+    <script>
+        // Detect system theme and apply it
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+
+        const applySystemTheme = () => {
+            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            html.setAttribute('data-theme', systemTheme);
+            themeToggle.checked = systemTheme === 'dark';
+        };
+
+        applySystemTheme(); // Apply system theme on load
+
+        // Listen for changes in system theme
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applySystemTheme);
+
+        // Theme toggle functionality
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                html.setAttribute('data-theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+            }
+        });
+    </script>
+</body>
+</html>
