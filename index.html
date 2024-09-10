@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackerfeed</title>
+    <link rel="shortcut icon" href="page/media/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="page/css/pico.orange.min.css">
+    <link rel="stylesheet" href="page/css/style.css">
+    <style>
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .theme-switch {
+            display: inline-block;
+            margin: 0;
+        }
+        footer.container-fluid {
+            text-align: center;
+            padding: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="container-fluid">
+        <ul>
+            <li><strong><a href="https://hackernews.com">Hackerfeed</a></strong></li>
+        </ul>
+        <ul>
+            <li>
+                <div class="theme-toggle-container">
+                    <label class="theme-switch">
+                        <input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle light & dark theme" />
+                    </label>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <main class="container">
+        <div class="search-container">
+            <div class="logo">Hackerfeed</div>
+            <div class="search-bar">
+                <form action="https://duckduckgo.com/" method="get" target="_blank">
+                    <input
+                        type="search"
+                        name="q"
+                        placeholder="Search Duck Duck Go"
+                        aria-label="Search"
+                    />
+                </form>
+            </div>
+        </div>
+        <div id="stories"></div>
+    </main>
+    <footer class="container-fluid">
+        <p>Hackerfeed is made by <a href="https://hei-lima.tech">Heitor Lima</a> and powered by Hacker News. Want to <a href="https://github.com/Hei-Lima/hackerfeed">contribute</a>?</p>
+    </footer>
+    <script src="page/js/scripts.js"></script>
+    <script>
+ 
+    </script>
+</body>
+</html>
