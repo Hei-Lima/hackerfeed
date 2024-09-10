@@ -44,17 +44,16 @@ body, html {
     }
 }
 
-/* Adicione este CSS ao seu arquivo style.css */
 .search-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 60vh; /* Ajuste conforme necessário */
+    height: 60vh;
 }
 
 .search-bar {
-    width: 100%; /* Ajuste conforme necessário */
-    max-width: 700px; /* Ajuste conforme necessário */
+    width: 100%;
+    max-width: 700px;
 }
 
