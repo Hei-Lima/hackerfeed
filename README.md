@@ -1,11 +1,14 @@
-# Hackerfeed
+<Center><h1> Hackerfeed</h1></center>
 
+<center> <img src="icons/icon.png"/> </center>  
+<br>
 Hackerfeed replaces your Firefox homepage with a curated feed of the latest tech news from Hacker News.
 
 ## Features
-- 📰 Curated tech news
-- 🌙 Dark mode support
-- 🔍 DuckDuckGo search integration
+- 📰 **Curated Tech News**: Stay updated with the latest tech news from Hacker News.
+- 🌐 **Top Sites**: Quick access to your most visited sites.
+- 🌙 **Dark Mode Support**: Automatically adapts to your system's theme.
+- 🔍 **Google Search Integration**: Perform quick searches directly from your homepage.
 
 ## Installation
 1. Clone the repo: `git clone https://github.com/Hei-Lima/hackerfeed.git`

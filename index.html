@@ -7,22 +7,8 @@
     <link rel="shortcut icon" href="page/media/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="page/css/pico.orange.min.css">
     <link rel="stylesheet" href="page/css/style.css">
-    <style>
-        .theme-toggle-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .theme-switch {
-            display: inline-block;
-            margin: 0;
-        }
-        footer.container-fluid {
-            text-align: center;
-            padding: 1em 0;
-        }
-    </style>
 </head>
+
 <body>
     <nav class="container-fluid">
         <ul>
@@ -38,25 +24,31 @@
             </li>
         </ul>
     </nav>
+
     <main class="container">
         <div class="search-container">
             <div class="logo">Hackerfeed</div>
             <div class="search-bar">
-                <form action="https://duckduckgo.com/" method="get" target="_blank">
-                    <input
-                        type="search"
-                        name="q"
-                        placeholder="Search Duck Duck Go"
-                        aria-label="Search"
-                    />
+                <form action="https://google.com/search" method="get" target="_blank">
+                    <input type="search" name="q" placeholder="Search Google" aria-label="Search" />
                 </form>
             </div>
         </div>
+
+        <div class="top-sites-card">
+            <ul id="top-sites-list" class="top-sites-list grid"></ul>
+        </div>
+
         <div id="stories"></div>
     </main>
+
     <footer class="container-fluid">
-        <p>Hackerfeed is made by <a href="https://hei-lima.tech">Heitor Lima</a> and powered by Hacker News. Want to <a href="https://github.com/Hei-Lima/hackerfeed">contribute</a>?</p>
+        <p>Hackerfeed is made by <a href="https://hei-lima.tech">Heitor Lima</a> and powered by Hacker News. Want to <a
+                href="https://github.com/Hei-Lima/hackerfeed">contribute</a>?</p>
     </footer>
+
     <script src="page/js/scripts.js"></script>
+    <script src="page/js/topSites.js"></script>
 </body>
+
 </html>
