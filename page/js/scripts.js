@@ -18,19 +18,29 @@ document.addEventListener('DOMContentLoaded', function() {
     function displayStory(story) {
         const storyElement = document.createElement('div');
         storyElement.className = 'story-container';
+
         const titleElement = document.createElement('h2');
         const titleLink = document.createElement('a');
         titleLink.href = story.url;
         titleLink.target = '_blank';
         titleLink.textContent = story.title;
         titleElement.appendChild(titleLink);
+
         const authorElement = document.createElement('p');
         authorElement.textContent = `by ${story.by}`;
+
         const commentsElement = document.createElement('p');
-        commentsElement.textContent = `${story.descendants} comments`;
+        const commentsLink = document.createElement('a');
+        commentsLink.href = `https://news.ycombinator.com/item?id=${story.id}`;
+        commentsLink.target = '_blank';
+        commentsLink.textContent = `${story.descendants} comments`;
+        commentsLink.className = 'comment-link';
+        commentsElement.appendChild(commentsLink);
+
         storyElement.appendChild(titleElement);
         storyElement.appendChild(authorElement);
         storyElement.appendChild(commentsElement);
+
         storiesContainer.appendChild(storyElement);
     }
 
