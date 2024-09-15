@@ -49,7 +49,7 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 60vh;
+    height: 45vh;
 }
 
 .search-bar {
@@ -57,3 +57,56 @@ body, html {
     max-width: 700px;
 }
 
+/* Estilização da lista de sites */
+.grid {
+    display: flex;
+    justify-content: space-around; /* Distribui os itens igualmente */
+    flex-wrap: wrap; /* Permite que os itens quebrem a linha se necessário */
+    gap: 20px;
+}
+
+.top-sites-list li {
+    display: flex;
+    flex-direction: column; /* Coloca o ícone e o título em uma coluna */
+    align-items: center; /* Centraliza os itens no meio */
+    max-width: 100px;
+    text-align: center;
+}
+
+.top-sites-list img {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
+
+.top-sites-list a {
+    font-size: 0.9em;
+    color: inherit;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100px;
+}
+
+.theme-toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-switch {
+    display: inline-block;
+    margin: 0;
+}
+
+footer.container-fluid {
+    text-align: center;
+    padding: 1em 0;
+}
+
+.comment-link {
+    text-decoration: none;
+    color: inherit;
+}
