@@ -18,24 +18,19 @@ document.addEventListener('DOMContentLoaded', function() {
     function displayStory(story) {
         const storyElement = document.createElement('div');
         storyElement.className = 'story-container';
-
         const titleElement = document.createElement('h2');
         const titleLink = document.createElement('a');
         titleLink.href = story.url;
         titleLink.target = '_blank';
         titleLink.textContent = story.title;
         titleElement.appendChild(titleLink);
-
         const authorElement = document.createElement('p');
         authorElement.textContent = `by ${story.by}`;
-
         const commentsElement = document.createElement('p');
         commentsElement.textContent = `${story.descendants} comments`;
-
         storyElement.appendChild(titleElement);
         storyElement.appendChild(authorElement);
         storyElement.appendChild(commentsElement);
-
         storiesContainer.appendChild(storyElement);
     }
 
@@ -67,23 +62,34 @@ document.addEventListener('DOMContentLoaded', function() {
     const html = document.documentElement;
     const themeToggle = document.getElementById('theme-toggle');
 
-    const applySystemTheme = () => {
-        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        html.setAttribute('data-theme', systemTheme);
-        themeToggle.checked = systemTheme === 'dark';
-    };
+    // Function to apply theme
+    function applyTheme(theme) {
+        html.setAttribute('data-theme', theme);
+        themeToggle.checked = theme === 'dark';
+        localStorage.setItem('theme', theme);
+    }
 
-    applySystemTheme(); // Apply system theme on load
+    // Function to get user's preferred theme
+    function getPreferredTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            return savedTheme;
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // Apply user's preferred theme on load
+    applyTheme(getPreferredTheme());
 
     // Listen for changes in system theme
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applySystemTheme);
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        const newTheme = e.matches ? 'dark' : 'light';
+        applyTheme(newTheme);
+    });
 
     // Theme toggle functionality
     themeToggle.addEventListener('change', () => {
-        if (themeToggle.checked) {
-            html.setAttribute('data-theme', 'dark');
-        } else {
-            html.setAttribute('data-theme', 'light');
-        }
+        const newTheme = themeToggle.checked ? 'dark' : 'light';
+        applyTheme(newTheme);
     });
 });
