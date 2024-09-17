@@ -1,3 +1,4 @@
+![Get it for Firefox](https://img.shields.io/badge/Get_it_for-Firefox-orange?logo=firefox&link=https://addons.mozilla.org/en-US/firefox/addon/hackerfeed/)
 <Center><h1> Hackerfeed</h1></center>
 
 <center> <img src="icons/icon.png"/> </center>  
