@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hackerfeed</title>
     <link rel="shortcut icon" href="page/media/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="page/css/pico.orange.min.css">
-    <link rel="stylesheet" href="page/css/style.css">
+    <link href="page/css/output.css" rel="stylesheet">
 </head>
 
 <body>
@@ -25,7 +24,7 @@
         </ul>
     </nav>
 
-    <main class="container">
+    <main class="container prose">
         <div class="search-container">
             <div class="logo">Hackerfeed</div>
             <div class="search-bar">
@@ -34,11 +33,11 @@
                 </form>
             </div>
         </div>
-
+    
         <div class="top-sites-card">
             <ul id="top-sites-list" class="top-sites-list grid"></ul>
         </div>
-
+    
         <div id="stories"></div>
     </main>
 
