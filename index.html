@@ -1,53 +1,67 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hackerfeed</title>
     <link rel="shortcut icon" href="page/media/icon.png" type="image/x-icon">
     <link href="page/css/output.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 
-<body>
-    <nav class="container-fluid">
-        <ul>
-            <li><strong><a href="https://hackernews.com">Hackerfeed</a></strong></li>
-        </ul>
-        <ul>
-            <li>
-                <div class="theme-toggle-container">
-                    <label class="theme-switch">
-                        <input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle light & dark theme" />
-                    </label>
-                </div>
-            </li>
-        </ul>
+<body class="bg-base-200 font-display flex flex-col min-h-screen">
+    
+    <!-- Navbar -->
+    <nav class="navbar bg-base-200 px-6">
+        <div class="flex-1">
+            <a href="https://hackernews.com" class="btn btn-ghost text-3xl text-primary">Hackerfeed</a>
+        </div>
+        <div class="flex-none">
+            <label class="swap swap-rotate">
+                <input type="checkbox" class="theme-controller" value="synthwave" />
+                <svg class="swap-off w-8 h-8 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17Z..." />
+                </svg>
+                <svg class="swap-on w-8 h-8 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08..." />
+                </svg>
+            </label>
+        </div>
     </nav>
 
-    <main class="container prose">
-        <div class="search-container">
-            <div class="logo">Hackerfeed</div>
-            <div class="search-bar">
-                <form action="https://google.com/search" method="get" target="_blank">
-                    <input type="search" name="q" placeholder="Search Google" aria-label="Search" />
-                </form>
-            </div>
+    <!-- Conteúdo principal -->
+    <main class="flex flex-col items-center flex-grow space-y-12 py-16">
+        <!-- Título -->
+        <h1 class="text-6xl md:text-8xl font-bold text-primary">Hackerfeed</h1>
+
+        <!-- Barra de pesquisa (sem botão) -->
+        <form action="https://google.com/search" method="get" class="w-full max-w-2xl px-4">
+            <label class="input input-bordered flex items-center gap-3 h-14 text-lg w-full">
+                <svg class="h-7 w-7 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </g>
+                </svg>
+                <input type="search" name="q" required placeholder="Search Google" class="text-lg w-full" />
+            </label>
+        </form>
+
+        <!-- Lista de notícias -->
+        <div id="stories" class="max-w-[90rem] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-8">
         </div>
-    
-        <div class="top-sites-card">
-            <ul id="top-sites-list" class="top-sites-list grid"></ul>
-        </div>
-    
-        <div id="stories"></div>
     </main>
 
-    <footer class="container-fluid">
-        <p>Hackerfeed is made by <a href="https://hei-lima.tech">Heitor Lima</a> and powered by Hacker News. Want to <a
-                href="https://github.com/Hei-Lima/hackerfeed">contribute</a>?</p>
+    <!-- Footer -->
+    <footer class="bg-base-200 text-base-content text-center py-6 mt-10">
+        <p>Hackerfeed is made by <a href="https://hei-lima.tech" class="text-primary hover:underline">Heitor Lima</a> and powered by Hacker News.  
+            Want to <a href="https://github.com/Hei-Lima/hackerfeed" class="text-primary hover:underline">contribute</a>?</p>
     </footer>
 
     <script src="page/js/scripts.js"></script>
     <script src="page/js/topSites.js"></script>
+
 </body>
 
 </html>

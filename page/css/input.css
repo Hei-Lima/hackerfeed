@@ -1,17 +1,21 @@
 @import "tailwindcss";
 @plugin "daisyui";
 @plugin "@tailwindcss/typography";
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+
+
 
 @plugin "daisyui/theme" {
-    name: "dark";
+    name: "bark";
     default: true;
     prefersdark: true;
     color-scheme: "dark";
-    --color-base-100: oklch(14% 0 0);
-    --color-base-200: oklch(20% 0 0);
-    --color-base-300: oklch(27% 0.006 286.033);
+    --color-base-100: oklch(14% 0.005 285.823);
+    --color-base-200: oklch(14% 0.005 285.823);
+    --color-base-300: oklch(21% 0.006 285.885);
     --color-base-content: oklch(97% 0 0);
-    --color-primary: oklch(64% 0.222 41.116);
+    --color-primary: oklch(66% 0.179 58.318);
     --color-primary-content: oklch(100% 0 0);
     --color-secondary: oklch(38% 0.176 304.987);
     --color-secondary-content: oklch(97% 0.013 17.38);
@@ -27,16 +31,15 @@
     --color-warning-content: oklch(98% 0.026 102.212);
     --color-error: oklch(64% 0.246 16.439);
     --color-error-content: oklch(96% 0.015 12.422);
-    --radius-selector: 0.25rem;
-    --radius-field: 0.25rem;
-    --radius-box: 0.25rem;
+    --radius-selector: 2rem;
+    --radius-field: 2rem;
+    --radius-box: 1rem;
     --size-selector: 0.25rem;
     --size-field: 0.25rem;
-    --border: 0.5px;
+    --border: 0.8px;
     --depth: 1;
     --noise: 0;
   }
-  
 
 @plugin "daisyui/theme" {
     name: "light";
@@ -73,3 +76,4 @@
     --noise: 0;
   }
   
+  @theme {  --font-display: "Inter", "sans-serif"; }
