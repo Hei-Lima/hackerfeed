@@ -3,11 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"="width=device-width, initial-scale=1.0">
     <title>Hackerfeed</title>
-    <link rel="shortcut icon" href="page/media/icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="page/media/favico.ico" type="image/x-icon">
     <link href="page/css/output.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="page/js/index.js"></script>
 </head>
 
 <body class="bg-base-200 font-display flex flex-col min-h-screen">
@@ -15,29 +16,52 @@
     <!-- Navbar -->
     <nav class="navbar bg-base-200 px-6">
         <div class="flex-1">
-            <a href="https://hackernews.com" class="btn btn-ghost text-3xl text-primary">Hackerfeed</a>
+            <a href="https://hackernews.com" class="btn btn-ghost text-3xl text-primary">hackerfeed</a>
         </div>
         <div class="flex-none">
-            <label class="swap swap-rotate">
-                <input type="checkbox" class="theme-controller" value="synthwave" />
-                <svg class="swap-off w-8 h-8 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17Z..." />
-                </svg>
-                <svg class="swap-on w-8 h-8 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08..." />
-                </svg>
-            </label>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn m-1">
+                  <span>Theme</span>
+                  <svg
+                    width="12px"
+                    height="12px"
+                    class="inline-block h-2 w-2 fill-current opacity-60"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 2048 2048">
+                    <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
+                  </svg>
+                </div>
+                <ul tabindex="0" class="dropdown-content menu bg-base-200 rounded-box w-52 p-2 shadow-2xl mt-2 border border-base-300">
+                    <li><button data-set-theme="hackerfeed-dark" data-act-class="active">Hackerfeed Dark</button></li>
+                    <li><button data-set-theme="hackerfeed-light" data-act-class="active">Hackerfeed Light</button></li>
+                    <li><button data-set-theme="gruvbox" data-act-class="active">Gruvbox</button></li>
+                    <li><button data-set-theme="onedark" data-act-class="active">One Dark</button></li>
+                    <li><button data-set-theme="monokai" data-act-class="active">Monokai</button></li>  
+                    <li><button data-set-theme="solarized" data-act-class="active">Solarized Dark</button></li>  
+                    <li><button data-set-theme="pitchdark" data-act-class="active">Pitch Dark</button></li>
+                    <li><button data-set-theme="cupcake" data-act-class="active">Cupcake</button></li>
+                    <li><button data-set-theme="emerald" data-act-class="active">Emerald</button></li>
+                    <li><button data-set-theme="corporate" data-act-class="active">Corporate</button></li>
+                    <li><button data-set-theme="retro" data-act-class="active">Retro</button></li>
+                    <li><button data-set-theme="cyberpunk" data-act-class="active">Cyberpunk</button></li>
+                    <li><button data-set-theme="synthwave" data-act-class="active">Synthwave</button></li>
+                    <li><button data-set-theme="forest" data-act-class="active">Forest</button></li>
+                    <li><button data-set-theme="black" data-act-class="active">Black</button></li>
+                    <li><button data-set-theme="dracula" data-act-class="active">Dracula</button></li>
+                    <li><button data-set-theme="caramellatte" data-act-class="active">Caramel Latte</button></li>
+                    <li><button data-set-theme="abyss" data-act-class="active">Abyss</button></li>
+                    <li><button data-set-theme="silk" data-act-class="active">Silk</button></li>
+                    <li><button data-set-theme="hotdog" data-act-class="active">Hotdog</button></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <!-- Conteúdo principal -->
     <main class="flex flex-col items-center flex-grow space-y-12 py-16">
-        <!-- Título -->
-        <h1 class="text-6xl md:text-8xl font-bold text-primary">Hackerfeed</h1>
+        <h1 class="text-6xl md:text-8xl font-bold text-primary drop-shadow-md">hackerfeed</h1>
 
-        <!-- Barra de pesquisa (sem botão) -->
         <form action="https://google.com/search" method="get" class="w-full max-w-2xl px-4">
-            <label class="input input-bordered flex items-center gap-3 h-14 text-lg w-full">
+            <label class="input input-bordered border-base-300 flex items-center gap-3 h-14 text-lg w-full">
                 <svg class="h-7 w-7 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
                         <circle cx="11" cy="11" r="8"></circle>
@@ -48,12 +72,13 @@
             </label>
         </form>
 
-        <!-- Lista de notícias -->
+        <div id="topSites" class="max-w-[90rem] mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 px-4 sm:px-6 lg:px-8">
+        </div>
+
         <div id="stories" class="max-w-[90rem] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-8">
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-base-200 text-base-content text-center py-6 mt-10">
         <p>Hackerfeed is made by <a href="https://hei-lima.tech" class="text-primary hover:underline">Heitor Lima</a> and powered by Hacker News.  
             Want to <a href="https://github.com/Hei-Lima/hackerfeed" class="text-primary hover:underline">contribute</a>?</p>
