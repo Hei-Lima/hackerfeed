@@ -4,7 +4,10 @@
   "version": "3.0",
   "description": "Replaces the Firefox homepage with Hackerfeed, providing a curated feed of tech news and updates. Powered by Hacker News.",
   "icons": {
-    "48": "icons/icon.png"
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
   },
   "chrome_url_overrides": {
     "newtab": "index.html"
@@ -14,7 +17,7 @@
     "topSites"
   ],
   "browser_action": {
-    "default_icon": "icons/favico.png"
+    "default_icon": "icons/icon.png"
   },
   "browser_specific_settings": {
     "gecko": {

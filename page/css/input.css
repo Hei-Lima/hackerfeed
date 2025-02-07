@@ -753,8 +753,6 @@
   --noise: 0;
 }
 
-
-
 @plugin "daisyui/theme" {
   name: "blackpink";
   default: false;

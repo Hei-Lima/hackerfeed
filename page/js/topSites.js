@@ -34,15 +34,27 @@ const defaultSites = [
 
 // Function to create site card HTML
 function createSiteCard(site) {
-    return `
-        <a href="${site.url}" 
-           class="card card-sm drop-shadow-sm hover:drop-shadow-xl duration-200">
-            <div class="card-body items-center text-center p-4">
-                <img src="${site.icon}" alt="${site.name}" class="w-8 h-8 mb-1">
-                <h2 class="text-sm font-medium">${site.name}</h2>
-            </div>
-        </a>
-    `;
+    const card = document.createElement('a');
+    card.href = site.url;
+    card.className = "card card-sm drop-shadow-sm hover:drop-shadow-xl duration-200";
+    
+    const cardBody = document.createElement('div');
+    cardBody.className = "card-body items-center text-center p-4";
+    
+    const img = document.createElement('img');
+    img.src = site.icon;
+    img.alt = site.name;
+    img.className = "w-8 h-8 mb-1";
+    
+    const title = document.createElement('h2');
+    title.className = "text-sm font-medium";
+    title.textContent = site.name;
+    
+    cardBody.appendChild(img);
+    cardBody.appendChild(title);
+    card.appendChild(cardBody);
+    
+    return card;
 }
 
 async function getTopSites() {
@@ -71,8 +83,13 @@ async function populateTopSites() {
     const topSitesContainer = document.getElementById('topSites');
     if (topSitesContainer) {
         const sites = await getTopSites();
-        const siteCards = sites.map(site => createSiteCard(site)).join('');
-        topSitesContainer.innerHTML = siteCards;
+        // Clear existing content
+        topSitesContainer.textContent = '';
+        // Append each card directly
+        sites.forEach(site => {
+            const card = createSiteCard(site);
+            topSitesContainer.appendChild(card);
+        });
     }
 }
 
