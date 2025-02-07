@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const cacheTime = localStorage.getItem("cacheTime");
         const now = new Date().getTime();
     
-        if (!topStories || !cacheTime || now - cacheTime > 0) { 
+        if (!topStories || !cacheTime || now - cacheTime > 15 * 60 * 1000) { 
             const topStoryIds = await fetchTopStories();
             topStories = [];
             for (const id of topStoryIds) {
