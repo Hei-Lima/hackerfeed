@@ -14,7 +14,7 @@
     "topSites"
   ],
   "browser_action": {
-    "default_icon": "icons/icon.png"
+    "default_icon": "icons/favico.png"
   },
   "browser_specific_settings": {
     "gecko": {
