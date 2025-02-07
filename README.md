@@ -1,11 +1,13 @@
 ![Get it for Firefox](https://img.shields.io/badge/Get_it_for-Firefox-orange?logo=firefox&link=https://addons.mozilla.org/en-US/firefox/addon/hackerfeed/)
-<Center><h1> Hackerfeed</h1></center>
-
 <div align="center">
-  <img src="icons/icon128.png" alt="Hackerfeed Logo"/>
-</div>
 
-Hackerfeed replaces your Firefox homepage with a curated feed of the latest tech news from Hacker News.
+<center> <h1> Hackerfeed </h1> </center>
+
+<img src="icons/icon128.png" alt="Hackerfeed Logo"/>
+
+*Hackerfeed replaces your Firefox homepage with a curated feed of the latest tech news from Hacker News.*
+
+</div>
 
 ## Features
 - 📰 **Curated Tech News**: Stay updated with the latest tech news from Hacker News.
