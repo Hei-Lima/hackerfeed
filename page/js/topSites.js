@@ -32,6 +32,15 @@ const defaultSites = [
     }
 ];
 
+function getFaviconUrl(url) {
+    try {
+        const domain = new URL(url).hostname;
+        return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+    } catch (e) {
+        return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAnklEQVQ4jWNgGDTg/3/d/zCMTw6nGmI1g9ggvWADYGx0cZghIHEYBomD5EBqwQYg24BNM7IhMM0wA5DFwAbANKNrRjaEgYGBgfE/EQCnGnQXYNOMbAheF+DTjOydb/9xAGQ16C5AVQwHonAXoIcDLs0YLkDXjM0QDANwacZmCNwAXJqRDYEbgEszsiFwA/BpRjYEbgAJmgcnAADh0mcjz+91dwAAAABJRU5ErkJggg==';
+    }
+}
+
 // Function to create site card HTML
 function createSiteCard(site) {
     const card = document.createElement('a');
@@ -58,24 +67,25 @@ function createSiteCard(site) {
 }
 
 async function getTopSites() {
-    if (typeof browser !== 'undefined' && browser.topSites) {
+    if (typeof chrome !== 'undefined' && chrome.topSites) {
         try {
-            const sites = await browser.topSites.get({ limit: 5 });
-            return sites.map(site => {
+            const sites = await chrome.topSites.get();
+            return sites.slice(0, 5).map(site => {
                 const url = new URL(site.url);
                 const hostname = url.hostname.replace('www.', '');
                 const name = site.title || hostname.split('.')[0];
                 return {
                     name: name.charAt(0).toUpperCase() + name.slice(1),
                     url: site.url,
-                    icon: `https://www.google.com/s2/favicons?domain=${url.hostname}&sz=64`
+                    icon: getFaviconUrl(site.url)
                 };
             });
         } catch (e) {
-            console.log('TopSites API not available:', e);
+            console.log('Chrome TopSites API error:', e);
             return defaultSites;
         }
     }
+    console.log('Using default sites');
     return defaultSites;
 }
 

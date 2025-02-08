@@ -1,22 +1,26 @@
-# Remove existing package if it exists
-rm -f hackerfeed.xpi
+#!/bin/bash
 
-# Create new zip file with .xpi extension
-zip -r hackerfeed.xpi \
+# Remove existing package if it exists
+rm -f hackerfeed.zip
+
+# Create new zip file
+zip -r hackerfeed.zip \
     manifest.json \
     icons/* \
     index.html \
     page/**/* \
-    package.json \
     LICENSE \
     README.md \
-    -x "package.json" \
     -x ".*" \
     -x "__MACOSX" \
     -x "*.git*" \
     -x "node_modules/*" \
-    -x "complile.bash" \
-    -x "package-lock.json" \
+    -x "*.bash" \
+    -x "package*.json" \
+    -x "*.zip" \
     -x "*.xpi"
 
-echo "Extension packaged as hackerfeed.xpi"
+# Set executable permissions
+chmod +x compile-chrome.bash
+
+echo "Extension packaged as hackerfeed.zip"
