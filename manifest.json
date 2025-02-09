@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Hackerfeed",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Replaces the Firefox homepage with Hackerfeed, providing a curated feed of tech news and updates. Powered by Hacker News.",
   "icons": {
     "16": "icons/icon16.png",
