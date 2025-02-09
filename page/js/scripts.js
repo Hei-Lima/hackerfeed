@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function displayStory(story) {
         const storyElement = document.createElement("div");
-        storyElement.className = "card card-lg bg-base-100 p-6 transition duration-200 hover:bg-base-300 border border-base-300 hover:border-base-100 flex flex-col h-full";
+        storyElement.className = "card card-lg bg-base-100 p-6 transition duration-200 border border-base-300 hover:border-primary flex flex-col h-full";
     
         const sourceElement = document.createElement("p");
         sourceElement.className = "text-sm text-base mb-1";

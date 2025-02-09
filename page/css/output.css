@@ -2117,9 +2117,6 @@
   .block {
     display: block;
   }
-  .contents {
-    display: contents;
-  }
   .flex {
     display: flex;
   }
@@ -2485,17 +2482,10 @@
       --cardtitle-fs: 1rem;
     }
   }
-  .hover\:border-base-100 {
+  .hover\:border-primary {
     &:hover {
       @media (hover: hover) {
-        border-color: var(--color-base-100);
-      }
-    }
-  }
-  .hover\:bg-base-300 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-base-300);
+        border-color: var(--color-primary);
       }
     }
   }
