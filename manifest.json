@@ -13,7 +13,6 @@
     "newtab": "index.html"
   },
   "permissions": [
-    "storage",
     "topSites"
   ],
   "browser_action": {

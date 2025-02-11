@@ -137,34 +137,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     displayTopStories();
-    
-
-    const html = document.documentElement;
-    const themeToggle = document.getElementById('theme-toggle');
-
-    function applyTheme(theme) {
-        html.setAttribute('data-theme', theme);
-        themeToggle.checked = theme === 'dark';
-        localStorage.setItem('theme', theme);
-    }
-
-    function getPreferredTheme() {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            return savedTheme;
-        }
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-
-    applyTheme(getPreferredTheme());
-
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        const newTheme = e.matches ? 'dark' : 'light';
-        applyTheme(newTheme);
-    });
-
-    themeToggle.addEventListener('change', () => {
-        const newTheme = themeToggle.checked ? 'dark' : 'light';
-        applyTheme(newTheme);
-    });
 });
