@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     const storiesContainer = document.getElementById('stories');
 
     async function fetchTopStories() {
@@ -137,4 +137,53 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     displayTopStories();
+
+    // Add search engine handling
+    const searchInput = document.getElementById('searchInput');
+    
+    async function updateSearchEngine() {
+        try {
+            if (typeof chrome !== 'undefined' && chrome.search) {
+                const engine = {
+                    name: 'Search',
+                    timestamp: new Date().getTime()
+                };
+                localStorage.setItem('chromeSearchEngine', JSON.stringify(engine));
+                searchInput.placeholder = 'Search';
+                return engine;
+            }
+            throw new Error('Chrome search API not available');
+        } catch (error) {
+            console.error('Failed to initialize search:', error);
+            const fallback = { name: 'Search', timestamp: new Date().getTime() };
+            searchInput.placeholder = 'Search';
+            return fallback;
+        }
+    }
+
+    // Initialize search engine
+    await updateSearchEngine();
+
+    // Update search engine every 30 minutes
+    setInterval(updateSearchEngine, 30 * 60 * 1000);
+
+    // Handle search form submission
+    document.getElementById('searchForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const query = searchInput.value;
+        
+        try {
+            if (typeof chrome !== 'undefined' && chrome.search) {
+                await chrome.search.query({
+                    text: query,
+                    disposition: 'NEW_TAB'
+                });
+            } else {
+                throw new Error('Chrome search API not available');
+            }
+        } catch (error) {
+            console.error('Search failed:', error);
+            window.location.href = `https://google.com/search?q=${encodeURIComponent(query)}`;
+        }
+    });
 });

@@ -13,8 +13,8 @@
     "newtab": "index.html"
   },
   "permissions": [
-    "storage",
-    "topSites"
+    "topSites",
+    "search"
   ],
   "host_permissions": [
     "https://hacker-news.firebaseio.com/*"

@@ -62,7 +62,7 @@
     <main class="flex flex-col items-center flex-grow space-y-12 py-16">
         <h1 class="text-6xl md:text-8xl font-bold text-primary drop-shadow-md">hackerfeed</h1>
 
-        <form action="https://google.com/search" method="get" class="w-full max-w-2xl px-4">
+        <form id="searchForm" class="w-full max-w-2xl px-4">
             <label class="input input-bordered border-base-300 flex items-center gap-3 h-14 text-lg w-full">
                 <svg class="h-7 w-7 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
@@ -70,7 +70,12 @@
                         <path d="m21 21-4.3-4.3"></path>
                     </g>
                 </svg>
-                <input type="search" name="q" required placeholder="Search Google" class="text-lg w-full" />
+                <input 
+                    type="search" 
+                    id="searchInput"
+                    placeholder="Search"
+                    class="text-lg w-full" 
+                />
             </label>
         </form>
 
