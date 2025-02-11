@@ -1,4 +1,48 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+    // Update search placeholder with default engine
+    const searchInput = document.getElementById('searchInput');
+    
+    async function updateSearchEngines() {
+        try {
+            const results = await browser.search.get();
+            const defaultEngine = results.find(engine => engine.isDefault);
+            
+            if (defaultEngine) {
+                console.log(`Default search engine: ${defaultEngine.name}`);
+                searchInput.placeholder = `Search with ${defaultEngine.name}`;
+                
+                // Store in localStorage
+                localStorage.setItem('defaultSearchEngine', JSON.stringify(defaultEngine));
+                localStorage.setItem('searchEngineUpdateTime', new Date().getTime());
+            }
+            
+            // Log all available search engines
+            console.log(`Available search engines: ${results.length}`);
+            results.forEach(engine => console.log(`- ${engine.name}`));
+            
+        } catch (error) {
+            console.error('Failed to get search engines:', error);
+            searchInput.placeholder = 'Search';
+        }
+    }
+
+    // Check if we need to update search engines
+    const lastUpdate = localStorage.getItem('searchEngineUpdateTime');
+    const now = new Date().getTime();
+    
+    if (!lastUpdate || now - parseInt(lastUpdate) > 30 * 60 * 1000) {
+        await updateSearchEngines();
+    } else {
+        // Use cached engine
+        const cachedEngine = JSON.parse(localStorage.getItem('defaultSearchEngine'));
+        if (cachedEngine) {
+            searchInput.placeholder = `Search with ${cachedEngine.name}`;
+        }
+    }
+
+    // Set up periodic update every 30 minutes
+    setInterval(updateSearchEngines, 30 * 60 * 1000);
+
     const storiesContainer = document.getElementById('stories');
 
     async function fetchTopStories() {
@@ -137,4 +181,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     displayTopStories();
+});
+
+document.getElementById('searchForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const query = document.getElementById('searchInput').value;
+    try {
+        const cachedEngine = JSON.parse(localStorage.getItem('defaultSearchEngine'));
+        await browser.search.query({
+            text: query,
+            engine: cachedEngine?.name
+        });
+    } catch (error) {
+        console.error('Search failed:', error);
+        window.location.href = `https://google.com/search?q=${encodeURIComponent(query)}`;
+    }
 });
