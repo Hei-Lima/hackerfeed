@@ -200,17 +200,16 @@ document.getElementById('searchForm').addEventListener('submit', async (e) => {
             // Chrome
             await chrome.search.query({
                 text: query,
-                disposition: 'NEW_TAB'
+                disposition: 'CURRENT_TAB'  // Forces search in current tab
             });
         } else if (typeof browser !== 'undefined' && browser.search) {
             // Firefox
             await browser.search.search({
-                query: query,
-                engine: undefined // Uses default engine
+                query: query
             });
         } else {
             // Fallback
-            throw new Error('Search API not available');
+            window.location.href = `https://google.com/search?q=${encodeURIComponent(query)}`;
         }
     } catch (error) {
         console.error('Search failed:', error);
