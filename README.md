@@ -5,7 +5,7 @@
 
 <img src="icons/icon128.png" alt="Hackerfeed Logo"/>
 
-*Hackerfeed replaces your Firefox homepage with a curated feed of the latest tech news from Hacker News.*
+*Hackerfeed replaces your Firefox (or Chrome) homepage with a curated feed of the latest tech news from Hacker News.*
 
 </div>
 
@@ -18,8 +18,8 @@
 ## Installation
 1. Clone the repo: `git clone https://github.com/Hei-Lima/hackerfeed.git`
 2. Navigate to the project directory: `cd hackerfeed'
-3. Run the bash script: `./compile.bash`
-4. Load the extension in Firefox: `about:debugging` > "This Firefox" > "Load Temporary Add-on" > Select `hackerfeed.xpi`
+3. Run the bash script: `./build.bash` to generate the extension for Chrome and Firefox.
+4. Load the extension in your Browser.
 
 ## License
 Licensed under the Apache License, Version 2.0.
