@@ -1,25 +1,30 @@
 document.addEventListener('DOMContentLoaded', async function() {
-    // Update search placeholder with default engine
     const searchInput = document.getElementById('searchInput');
     
     async function updateSearchEngines() {
         try {
-            const results = await browser.search.get();
-            const defaultEngine = results.find(engine => engine.isDefault);
-            
-            if (defaultEngine) {
-                console.log(`Default search engine: ${defaultEngine.name}`);
-                searchInput.placeholder = `Search with ${defaultEngine.name}`;
+            if (typeof browser !== 'undefined' && browser.search) {
+                // Firefox
+                const results = await browser.search.get();
+                const defaultEngine = results.find(engine => engine.isDefault);
                 
-                // Store in localStorage
-                localStorage.setItem('defaultSearchEngine', JSON.stringify(defaultEngine));
+                if (defaultEngine) {
+                    console.log(`Default search engine: ${defaultEngine.name}`);
+                    searchInput.placeholder = `Search with ${defaultEngine.name}`;
+                    localStorage.setItem('defaultSearchEngine', JSON.stringify(defaultEngine));
+                    localStorage.setItem('searchEngineUpdateTime', new Date().getTime());
+                }
+            } else if (typeof chrome !== 'undefined' && chrome.search) {
+                // Chrome - simple search placeholder
+                searchInput.placeholder = 'Search';
+                localStorage.setItem('defaultSearchEngine', JSON.stringify({ name: '' }));
+                localStorage.setItem('searchEngineUpdateTime', new Date().getTime());
+            } else {
+                // Fallback
+                searchInput.placeholder = 'Search';
+                localStorage.setItem('defaultSearchEngine', JSON.stringify({ name: '' }));
                 localStorage.setItem('searchEngineUpdateTime', new Date().getTime());
             }
-            
-            // Log all available search engines
-            console.log(`Available search engines: ${results.length}`);
-            results.forEach(engine => console.log(`- ${engine.name}`));
-            
         } catch (error) {
             console.error('Failed to get search engines:', error);
             searchInput.placeholder = 'Search';
@@ -33,10 +38,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (!lastUpdate || now - parseInt(lastUpdate) > 30 * 60 * 1000) {
         await updateSearchEngines();
     } else {
-        // Use cached engine
+        // Use cached engine only for Firefox
         const cachedEngine = JSON.parse(localStorage.getItem('defaultSearchEngine'));
-        if (cachedEngine) {
+        if (cachedEngine && cachedEngine.name && typeof browser !== 'undefined') {
             searchInput.placeholder = `Search with ${cachedEngine.name}`;
+        } else {
+            searchInput.placeholder = 'Search';
         }
     }
 
@@ -183,15 +190,28 @@ document.addEventListener('DOMContentLoaded', async function() {
     displayTopStories();
 });
 
+// Handle search form submission
 document.getElementById('searchForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const query = document.getElementById('searchInput').value;
+    const query = searchInput.value;
+    
     try {
-        const cachedEngine = JSON.parse(localStorage.getItem('defaultSearchEngine'));
-        await browser.search.query({
-            text: query,
-            engine: cachedEngine?.name
-        });
+        if (typeof chrome !== 'undefined' && chrome.search) {
+            // Chrome
+            await chrome.search.query({
+                text: query,
+                disposition: 'NEW_TAB'
+            });
+        } else if (typeof browser !== 'undefined' && browser.search) {
+            // Firefox
+            await browser.search.search({
+                query: query,
+                engine: undefined // Uses default engine
+            });
+        } else {
+            // Fallback
+            throw new Error('Search API not available');
+        }
     } catch (error) {
         console.error('Search failed:', error);
         window.location.href = `https://google.com/search?q=${encodeURIComponent(query)}`;
