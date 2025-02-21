@@ -1,0 +1,74 @@
+/* Navbar specific styles */
+.navbar {
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
+    border-radius: 0 0 20px 20px !important;
+    margin: 0 1rem 1rem 1rem !important;
+    width: calc(100% - 2rem) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Buttons in navbar */
+.navbar .btn {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.navbar .btn:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Dropdown menu */
+.dropdown-content {
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
+}
+
+/* Modal styling with Frutiger Aero effect */
+.modal-box {
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
+    border-radius: 20px !important;
+}
+
+/* Modal input fields */
+.modal-box .input,
+.modal-box .select {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.modal-box .input:focus,
+.modal-box .select:focus {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+    background: rgba(0, 0, 0, 0.2) !important;
+    backdrop-filter: blur(3px) !important;
+    -webkit-backdrop-filter: blur(3px) !important;
+}
+
+/* Dark theme compatibility */
+[data-theme="dark"] .navbar *,
+[data-theme="dark"] .modal-box * {
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .modal-box {
+    background: rgba(0, 0, 0, 0.2) !important;
+}

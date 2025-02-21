@@ -8,7 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="shortcut icon" href="page/media/favico.ico" type="image/x-icon">
-    <link href="page/css/output.css" rel="stylesheet">
+    <link href="page/css/output.css" rel="stylesheet" id="mainStyle" media="all">
+    <link href="page/css/frutiger.css" rel="stylesheet" id="frutigerStyleCard" media="none">
+    <link href="page/css/frutigerNav.css" rel="stylesheet" id="frutigerStyleNav" media="none">
     <script src="page/js/index.js"></script>
     <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -67,32 +69,71 @@
         </button>
         
         <dialog id="settings" class="modal modal-bottom sm:modal-middle">
-            <div class="modal-box">
-                <h3 class="font-bold text-lg mb-6">Settings</h3>
-                <label class="label">
-                    <span class="label-text font-medium">Font</span>
-                </label>
-                <select class="select select-ghost" id="fontSelect">
-                    <option disabled selected>Pick a font</option>
-                    <option>Inter</option>
-                    <option>Poppins</option>
-                    <option>EB Garamond</option>
-                    <option>IBM Plex Sans</option>
-                    <option>JetBrains Mono</option>
-                    <option>Montserrat</option>
-                    <option>Newsreader</option>
-                    <option>Roboto</option>
-                </select>
-
-                <div class="form-control w-full">
+            <div class="modal-box space-y-4">
+                <h3 class="font-bold text-lg">Settings</h3>
+        
+                <!-- Font Selection -->
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-medium">Font</span>
+                    </label>
+                    <select class="select select-ghost w-full" id="fontSelect">
+                        <option disabled selected>Pick a font</option>
+                        <option>Inter</option>
+                        <option>Poppins</option>
+                        <option>EB Garamond</option>
+                        <option>IBM Plex Sans</option>
+                        <option>JetBrains Mono</option>
+                        <option>Montserrat</option>
+                        <option>Newsreader</option>
+                        <option>Roboto</option>
+                    </select>
+                </div>
+        
+                <!-- Background Selection -->
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-medium">Background</span>
+                    </label>
+                    <select class="select select-ghost w-full" id="backgroundSelect">
+                        <option disabled selected>Pick a background</option>
+                        <option>Default</option>
+                        <option>Dark Gradient</option>
+                        <option>Glass</option>
+                        <option>Frutiger</option>
+                    </select>
+                </div>
+        
+                <!-- Glassmorphic Effects -->
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-medium">
+                            Glassmorphic effects
+                            <span class="badge">Experimental</span>
+                        </span>
+                    </label>
+                    <div class="flex items-center gap-4">
+                        <label class="flex items-center gap-2">
+                            <span>Cards</span>
+                            <input type="checkbox" class="toggle" id="cardGlassCheck"/>
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <span>Navbar</span>
+                            <input type="checkbox" class="toggle" id="navbarGlassCheck"/>
+                        </label>
+                    </div>
+                </div>
+        
+                <!-- Stories Refresh Interval -->
+                <div class="form-control">
                     <label class="label">
                         <span class="label-text font-medium">Stories refresh interval</span>
                     </label>
                     <label class="input-group">
-                        <input type="number" 
-                               min="0" 
-                               class="input input-bordered w-half" 
-                               id="fetchTimeInput" 
+                        <input type="number"
+                               min="0"
+                               class="input input-bordered w-full max-w-xs"
+                               id="fetchTimeInput"
                                placeholder="Current: 15"/>
                         <span>minutes</span>
                     </label>
@@ -101,17 +142,20 @@
                     </label>
                 </div>
         
-                <div class="modal-action">
+                <!-- Modal Actions -->
+                <div class="modal-action justify-end">
                     <form method="dialog" class="flex gap-2">
                         <button class="btn">Cancel</button>
                         <button class="btn btn-success" id="SaveBtn" onclick="Save()">Save changes</button>
                     </form>
                 </div>
             </div>
+            
             <form method="dialog" class="modal-backdrop">
                 <button>close</button>
             </form>
         </dialog>
+        
     </nav>
 
     <main class="flex flex-col items-center flex-grow space-y-12 py-16">

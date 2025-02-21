@@ -1,0 +1,52 @@
+/* Frutiger Aero glass effect for cards and search */
+#stories > div,
+#topSites > div,
+#searchForm .input {
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
+    border-radius: 20px !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Hover effects for cards */
+#stories > div:hover,
+#topSites > div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45) !important;
+    background: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Search input specific styles */
+#searchForm .input {
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+#searchForm .input:focus-within {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Adjust text colors for better visibility */
+#stories > div *,
+#topSites > div *,
+#searchForm .input * {
+    color: rgba(0, 0, 0, 0.8) !important;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+/* Style for links and hover states */
+#stories > div a:hover,
+#topSites > div a:hover {
+    color: rgba(0, 0, 0, 1) !important;
+}
+
+/* Dark theme compatibility */
+[data-theme="dark"] #stories > div *,
+[data-theme="dark"] #topSites > div *,
+[data-theme="dark"] #searchForm .input * {
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
