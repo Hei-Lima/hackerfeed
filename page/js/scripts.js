@@ -47,8 +47,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }
 
-    // Set up periodic update every 30 minutes
-    setInterval(updateSearchEngines, 30 * 60 * 1000);
+    let intervalMinutes = localStorage.getItem("saveTime");
+    if (intervalMinutes == undefined || intervalMinutes == null) intervalMinutes = 30;
+
+    console.log(intervalMinutes)
+
+    setInterval(updateSearchEngines, parseInt(intervalMinutes, 10) * 60 * 1000);
 
     const storiesContainer = document.getElementById('stories');
 
