@@ -31,6 +31,18 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }
 
+    // Constants for time intervals
+    const DEFAULT_INTERVAL = 15;
+
+    // Get interval from localStorage with validation
+    function getStoredInterval() {
+        const stored = localStorage.getItem("saveTime");
+        const parsed = parseInt(stored, 10);
+        return (!isNaN(parsed) && parsed > 0) ? parsed : DEFAULT_INTERVAL;
+    }
+
+    let intervalMinutes = getStoredInterval();
+    
     // Check if we need to update search engines
     const lastUpdate = localStorage.getItem('searchEngineUpdateTime');
     const now = new Date().getTime();
@@ -47,10 +59,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }
 
-    let intervalMinutes = localStorage.getItem("saveTime");
-    if (intervalMinutes == undefined || intervalMinutes == null) intervalMinutes = 30;
-
-    console.log(intervalMinutes)
 
     setInterval(updateSearchEngines, parseInt(intervalMinutes, 10) * 60 * 1000);
 
@@ -175,8 +183,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         let topStories = JSON.parse(localStorage.getItem("topStories"));
         const cacheTime = localStorage.getItem("cacheTime");
         const now = new Date().getTime();
-    
-        if (!topStories || !cacheTime || now - cacheTime > 15 * 60 * 1000) { 
+        
+        let fetchInterval = localStorage.getItem("saveTime") || 15;
+
+        if (!topStories || !cacheTime || now - cacheTime > fetchInterval * 60 * 1000) { 
             const topStoryIds = await fetchTopStories();
             topStories = [];
             for (const id of topStoryIds) {
