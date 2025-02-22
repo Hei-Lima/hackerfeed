@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     async function displayTopStories() {
         const storiesContainer = document.getElementById("stories");
-        storiesContainer.textContent = ''; // Clear safely
+        storiesContainer.textContent = '';
         
         // Add skeleton cards
         for (let i = 0; i < 21; i++) {
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const cacheTime = localStorage.getItem("cacheTime");
         const now = new Date().getTime();
         
-        let fetchInterval = localStorage.getItem("saveTime") || 15;
+        let fetchInterval = localStorage.getItem("saveTime") ??  15;
 
         if (!topStories || !cacheTime || now - cacheTime > fetchInterval * 60 * 1000) { 
             const topStoryIds = await fetchTopStories();
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             localStorage.setItem("cacheTime", now);
         }
     
-        storiesContainer.textContent = ''; // Clear safely
+        storiesContainer.textContent = ''; 
         topStories.forEach((story) => displayStory(story));
     }
     

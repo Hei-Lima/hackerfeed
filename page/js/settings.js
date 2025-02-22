@@ -36,15 +36,23 @@ function saveBackground() {
     changeBackground();
     }
 
+function changeBlurDarken(blur = localStorage.getItem("blur") ?? 0, darken = localStorage.getItem("darken") ?? 0) {
+    console.log(blur)
+    console.log(darken)
+    document.documentElement.style.setProperty('--blur-effect', `blur(${blur}px)`);
+    document.documentElement.style.setProperty('--darken-overlay', `rgba(0, 0, 0, ${darken / 100})`);
+}
+
 function changePlaceholders() {
-    let saveTime = localStorage.getItem("saveTime") || 15;
+    let saveTime = localStorage.getItem("saveTime") ?? 15;
     document.getElementById("fetchTimeInput").placeholder = `Current: ${saveTime}`;
     const navGlass = localStorage.getItem("navGlass");
     const cardGlass = localStorage.getItem("cardGlass");
-    
+
     document.getElementById("navbarGlassCheck").checked = navGlass === null ? false : navGlass === "true";
     document.getElementById("cardGlassCheck").checked = cardGlass === null ? false : cardGlass === "true";
     document.getElementById("fontSelect").value = localStorage.getItem("selectedFont") || "Inter";
+    document.getElementById("backgroundSelect").value = localStorage.getItem("selectedBackground") || "Pick a Background";
 }
 
 function changeGlass() {
@@ -77,6 +85,15 @@ function changeBackground() {
             document.body.style.backgroundSize = "cover";
             return;
         }
+        if (localStorage.getItem("selectedBackground") === "Light Gradient") {
+            const gradient = "linear-gradient(to top, #e0eafc, #cfdef3)";
+            document.body.style.backgroundImage = gradient;
+            document.body.style.backgroundAttachment = "fixed";
+            document.body.style.backgroundPosition = "center";
+            document.body.style.backgroundRepeat = "no-repeat";
+            document.body.style.backgroundSize = "cover";
+            return;
+        }
         let selectedBackground = localStorage.getItem("selectedBackground") || "default.jpg";
         document.body.style.backgroundImage = `url('/page/background/${selectedBackground}.webp')`;
         document.body.style.backgroundAttachment = "fixed";
@@ -90,17 +107,52 @@ function changeBackground() {
         document.body.style.backgroundPosition = "";
         document.body.style.backgroundRepeat = "";
         document.body.style.backgroundSize = "";
+        document.body.style.backdropFilter = "";
     }
 }
+
+
 
 function Save() {
     saveFont();
     saveTime();
     saveGlass();
     saveBackground();
+    saveBlurDarken();
 } 
 
-changeGlass();
-changeBackground();
-changeFont();
-changePlaceholders();
+function initializeRangeInputs() {
+    const blurRange = document.getElementById('blurRange');
+    const darkenRange = document.getElementById('darkenRange');
+    const blurValue = document.getElementById('blurValue');
+    const darkenValue = document.getElementById('darkenValue');
+
+    blurRange.addEventListener('input', function() {
+        blurValue.textContent = this.value + 'px';
+        changeBlurDarken(this.value, undefined);
+    });
+
+    darkenRange.addEventListener('input', function() {
+        darkenValue.textContent = this.value + '%';
+        changeBlurDarken(undefined, this.value);
+    });
+}
+
+function saveBlurDarken() {
+    const blur = document.getElementById('blurRange').value;
+    const darken = document.getElementById('darkenRange').value;
+    localStorage.setItem('blur', blur);
+    localStorage.setItem('darken', darken);
+    changeBlurDarken(blur, darken);
+}
+
+function change() {
+    initializeRangeInputs();
+    changeGlass();
+    changeBackground();
+    changeFont();
+    changePlaceholders();
+    changeBlurDarken();
+}
+
+change();

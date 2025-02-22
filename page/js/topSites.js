@@ -122,7 +122,6 @@ async function populateTopSites() {
     }
 }
 
-// Initialize when DOM is loaded
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', populateTopSites);
 } else {
