@@ -17,12 +17,13 @@
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-base-200 font-display flex flex-col min-h-screen">
+    <div id="background-container"></div> <!-- Background container -->
     <div id="overlay-container"></div>
     <div id="content-container">
         <div class="background-image"></div>
         <!-- Navbar -->
-        <nav class="navbar px-6">
+        <nav class="navbar px-6" id="navbar">
             <div class="flex-1">
                 <a href="https://hackernews.com" class="btn btn-ghost text-3xl text-primary">hackerfeed</a>
             </div>
@@ -108,6 +109,19 @@
                         </select>
                     </div>
             
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text font-medium">
+                                Ghost Navbar
+                            </span>
+                        </label>
+                        <div class="flex items-center gap-4">
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="toggle" id="ghostNavCheck"/>
+                            </label>
+                        </div>
+                    </div>
+
                     <!-- Glassmorphic Effects -->
                     <div class="form-control">
                         <label class="label">

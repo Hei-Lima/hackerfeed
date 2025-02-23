@@ -1,17 +1,3 @@
-body {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -2;
-    min-height: 100vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
 #overlay-container {
     position: fixed;
     top: 0;
@@ -19,11 +5,22 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
-    background: var(--darken-overlay, rgba(0, 0, 0, 0.7));
-    backdrop-filter: var(--blur-effect, blur(25px));
 }
 
 #content-container {
-    position: relative !important;
+    position: relative;
     z-index: 1;
 }
+
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 1;
+    z-index: -1; 
+    background: var(--darken-overlay, rgba(0, 0, 0, 0.7));
+    backdrop-filter: var(--blur-effect, blur(25px));}
