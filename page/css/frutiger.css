@@ -1,49 +1,44 @@
-/* Frutiger Aero glass effect for cards and search */
+/* Glassmorphism Cards */
 #stories > div,
 #topSites > div,
 #searchForm .input {
-    background: rgba(255, 255, 255, 0.2) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
-    border-radius: 20px !important;
-    transition: all 0.3s ease !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 0 6px 24px rgba(31, 38, 135, 0.35) !important;
+    border-radius: 18px !important;
+    padding: 16px;
+    transition: all 0.3s ease-in-out;
 }
 
-/* Hover effects for cards */
+/* Hover Lift Effect */
 #stories > div:hover,
 #topSites > div:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45) !important;
-    background: rgba(255, 255, 255, 0.25) !important;
+    transform: translateY(-6px);
+    box-shadow: 0 10px 35px rgba(31, 38, 135, 0.4) !important;
+    background: rgba(255, 255, 255, 0.18) !important;
 }
 
-/* Search input specific styles */
+/* Search Input */
 #searchForm .input {
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
 #searchForm .input:focus-within {
-    background: rgba(255, 255, 255, 0.3) !important;
-    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
 }
 
-/* Adjust text colors for better visibility */
+/* Better Text Visibility */
 #stories > div *,
 #topSites > div *,
 #searchForm .input * {
-    color: rgba(0, 0, 0, 0.8) !important;
+    color: rgba(0, 0, 0, 0.85) !important;
     text-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
-/* Style for links and hover states */
-#stories > div a:hover,
-#topSites > div a:hover {
-    color: rgba(0, 0, 0, 1) !important;
-}
-
-/* Dark theme compatibility */
+/* Dark Theme Compatibility */
 [data-theme="dark"] #stories > div *,
 [data-theme="dark"] #topSites > div *,
 [data-theme="dark"] #searchForm .input * {

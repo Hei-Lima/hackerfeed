@@ -1,5 +1,57 @@
 "use strict";
 
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Settings Modal
+    const settingsButton = document.getElementById('settingsButton');
+    const settingsModal = document.getElementById('settings');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const settingsForm = document.getElementById('settingsForm');
+
+    settingsButton.addEventListener('click', function() {
+        settingsModal.showModal();
+    });
+
+    cancelBtn.addEventListener('click', function() {
+        settingsModal.close();
+        change();
+    });
+
+    saveBtn.addEventListener('click', function() {
+        Save();
+        settingsModal.close();
+    });
+
+    // Other initializations
+    change();
+    initializeRangeInputs();
+});
+
+function changeTitle(selectedTitle = localStorage.getItem("selectedTitle") || "Default") {
+    const titleDiv = document.getElementById("title");
+
+    // Clear existing content
+    while (titleDiv.firstChild) {
+        titleDiv.removeChild(titleDiv.firstChild);
+    }
+
+    if (selectedTitle != "Default") {
+        const img = document.createElement("img");
+        img.src = `page/titles/${selectedTitle}.svg`;
+        img.alt = "Hackerfeed";
+        img.className = "w-96 md:w-120";
+        titleDiv.appendChild(img);
+    } else {
+        const h1 = document.createElement("h1");
+        h1.className = "text-6xl md:text-8xl font-bold text-primary drop-shadow-md";
+        h1.textContent = "hackerfeed";
+        titleDiv.appendChild(h1);
+    }
+
+    document.getElementById("titleSelect").value = selectedTitle;
+}
+
 function changeFont(selectedFont = localStorage.getItem("selectedFont") || "Inter") {
     console.log(selectedFont);
     document.documentElement.style.setProperty('--font-display', `"${selectedFont}", "sans-serif"`);
@@ -32,7 +84,11 @@ function changeNavbar(ghostNav = localStorage.getItem("ghostNav") === "true") {
 function changeBackground(selectedBackground) {
     selectedBackground = selectedBackground || localStorage.getItem("selectedBackground");
     if (selectedBackground) {
-        if (selectedBackground === "Dark Gradient") {
+        const gifs = ["Matrix", "Genesis"];
+        if (gifs.includes(selectedBackground)) {
+            console.log(selectedBackground);
+            document.body.style.backgroundImage = `url('/page/background/${selectedBackground}.gif')`;
+        } else if (selectedBackground === "Dark Gradient") {
             const gradient = "linear-gradient(to top, #0F2027, #203A43, #2C5364)";
             document.body.style.backgroundImage = gradient;
         } else if (selectedBackground === "Light Gradient") {
@@ -65,19 +121,23 @@ function changePlaceholders() {
     const cardGlass = localStorage.getItem("cardGlass");
     const blur = localStorage.getItem("blur") || 0;
     const darken = localStorage.getItem("darken") || 0;
-    const ghostNav = localStorage.getItem("ghostNav");
+    const title = localStorage.getItem("selectedTitle") || "Default";
+    const font = localStorage.getItem("selectedFont") || "Inter";
+    const fetchLimit = localStorage.getItem("fetchLimit") || 21;
 
+    document.getElementById("titleSelect").value = title;
+    document.getElementById("fontSelect").value = font;
     document.getElementById("fetchTimeInput").placeholder = `Current: ${saveTime}`;
     document.getElementById("blurRange").value = blur;
-    document.getElementById("ghostNavCheck").checked =  ghostNav === null ? false : ghostNav === "true";
     document.getElementById("darkenRange").value = darken;
+    document.getElementById("ghostNavCheck").checked = localStorage.getItem("ghostNav") === "true";
     document.getElementById("blurValue").textContent = `${blur}px`;
     document.getElementById("darkenValue").textContent = `${darken}%`;
     document.getElementById("fetchTimeInput").value = saveTime;
     document.getElementById("navbarGlassCheck").checked = navGlass === null ? false : navGlass === "true";
     document.getElementById("cardGlassCheck").checked = cardGlass === null ? false : cardGlass === "true";
-    document.getElementById("fontSelect").value = localStorage.getItem("selectedFont") || "Inter";
     document.getElementById("backgroundSelect").value = localStorage.getItem("selectedBackground") || "Pick a Background";
+    document.getElementById("fetchLimitInput").value = fetchLimit;
 }
 
 function initializeRangeInputs() {
@@ -89,6 +149,8 @@ function initializeRangeInputs() {
     const cardGlassCheck = document.getElementById('cardGlassCheck');
     const fetchTimeInput = document.getElementById('fetchTimeInput');
     const ghostNavCheck = document.getElementById("ghostNavCheck");
+    const titleSelect = document.getElementById("titleSelect");
+    const fetchLimitInput = document.getElementById("fetchLimitInput");
 
     blurRange.addEventListener('input', function() {
         changeBlurDarken(this.value, document.getElementById('darkenRange').value);
@@ -102,6 +164,10 @@ function initializeRangeInputs() {
 
     fontSelect.addEventListener('change', function() {
         changeFont(this.value);
+    });
+
+    titleSelect.addEventListener('change', function() {
+        changeTitle(this.value);
     });
 
     backgroundSelect.addEventListener('change', function() {
@@ -124,11 +190,21 @@ function initializeRangeInputs() {
         document.getElementById("fetchTimeInput").placeholder = `Current: ${this.value}`;
     });
 
+    fetchLimitInput.addEventListener('input', function() {
+        document.getElementById("fetchLimitInput").placeholder = `Current: ${this.value}`;
+    });
 }
 
 function saveFontValue() {
-    console.log("font value", document.getElementById("fontSelect").value);
     return document.getElementById("fontSelect").value;
+}
+
+function saveTitleValue() {
+    return document.getElementById("titleSelect").value;
+}
+
+function saveFetchLimit() {
+    return document.getElementById("fetchLimitInput").value;
 }
 
 function saveTimeValue() {
@@ -159,7 +235,9 @@ function saveBlurDarkenValues() {
 
 function Save() {
     localStorage.setItem("selectedFont", saveFontValue());
+    localStorage.setItem("selectedTitle", saveTitleValue());
     localStorage.setItem("saveTime", saveTimeValue());
+    localStorage.setItem("fetchLimit", saveFetchLimit());
 
     const glassValues = saveGlassValues();
     localStorage.setItem("navGlass", glassValues.navGlass);
@@ -178,13 +256,11 @@ function Save() {
 }
 
 function change() {
-    initializeRangeInputs();
     changeGlass();
     changeBackground();
     changeFont();
+    changeTitle();
     changePlaceholders();
     changeBlurDarken();
     changeNavbar();
 }
-
-change();

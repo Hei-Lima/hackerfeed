@@ -1,5 +1,7 @@
+let FETCHLIMIT = Number(localStorage.getItem("fetchLimit")) || 21;
+console.log(FETCHLIMIT);
+const searchInput = document.getElementById('searchInput');
 document.addEventListener('DOMContentLoaded', async function() {
-    const searchInput = document.getElementById('searchInput');
     
     async function updateSearchEngines() {
         try {
@@ -67,7 +69,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     async function fetchTopStories() {
         const response = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty');
         const topStoriesIds = await response.json();
-        return topStoriesIds.slice(0, 21);
+        return topStoriesIds.slice(0, FETCHLIMIT);
     }
 
     async function fetchStory(id) {
@@ -176,7 +178,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         storiesContainer.textContent = '';
         
         // Add skeleton cards
-        for (let i = 0; i < 21; i++) {
+        for (let i = 0; i < FETCHLIMIT; i++) {
             storiesContainer.appendChild(createSkeletonCard());
         }
     
