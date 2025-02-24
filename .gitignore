@@ -57,3 +57,4 @@ yarn.lock
 # Personal files #
 ##################
 .env
+output.css
