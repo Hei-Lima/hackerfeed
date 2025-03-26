@@ -789,3 +789,11 @@
 }
 
   @theme {  --font-display: "Inter", "sans-serif"; }
+
+  .truncate-text {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%; /* Ajuste conforme necessário */
+}

@@ -56,7 +56,7 @@ function createSiteCard(site) {
     img.className = "w-8 h-8 mb-1";
     
     const title = document.createElement('h2');
-    title.className = "text-sm font-medium";
+    title.className = "text-sm font-medium truncate-text";
     title.textContent = site.name;
     
     cardBody.appendChild(img);
