@@ -29,7 +29,9 @@
 		<!-- Navbar -->
 		<nav class="navbar px-6" id="navbar">
 			<div class="flex-1">
-				<a href="https://hackernews.com" class="btn btn-ghost text-3xl text-primary">hackerfeed</a>
+				<a href="https://hackernews.com" class="btn btn-ghost text-primary">
+					<img src="page/media/hackerfeed2.svg" class="w-10 h-10 fill-current text-primary">
+				</a>
 			</div>
 			<div class="flex-none">
 				<div class="dropdown dropdown-end">
@@ -187,9 +189,6 @@
 							</select>
 						</div>
 
-						<!-- Custom Gradient -->
-						<div class <input class="input input-bordered w-full" type="color" />
-
 						<!-- Background Selection -->
 						<div class="form-control">
 							<label class="label">
@@ -198,6 +197,7 @@
 							<select class="select select-bordered w-full" id="backgroundSelect">
 								<option disabled selected>Pick a background</option>
 								<option>Default</option>
+								<option>Custom Gradient</option>
 								<option>Dark Gradient</option>
 								<option>Light Gradient</option>
 								<option>Frutiger</option>
@@ -205,6 +205,24 @@
 								<option>Matrix</option>
 								<option>Genesis</option>
 							</select>
+						</div>
+
+						<!-- Custom Gradient -->
+						<div class="form-control space-y-4">
+							<div class="flex items-center gap-4">
+							  <label class="label">
+								<span class="label-text font-medium">Gradient Color 1</span>
+							  </label>
+							  <input class="w-16" type="color" id="gradient1" />
+							  <input class="input input-bordered w-full" type="text" id="gradient1Hex" placeholder="#000000" />
+							</div>
+							<div class="flex items-center gap-4">
+							  <label class="label">
+								<span class="label-text font-medium">Gradient Color 2</span>
+							  </label>
+							  <input class="w-16" type="color" id="gradient2" />
+							  <input class="input input-bordered w-full" type="text" id="gradient2Hex" placeholder="#000000" />
+							</div>
 						</div>
 
 						<!-- Title Style Selection -->

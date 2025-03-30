@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     saveBtn.addEventListener("click", function () {
-        saveSettings(); // Changed from Save()
+        saveSettings();
         settingsModal.close();
     });
 
@@ -66,6 +66,7 @@ function applyNavbar(ghostNav = localStorage.getItem("ghostNav") === "true") {
 function applyBackground(selectedBackground = localStorage.getItem("selectedBackground")) {
     if (selectedBackground) {
         const gifs = ["Matrix", "Genesis"];
+        const images = ["Glass", "Frutiger"]
         let backgroundUrl = '';
 
         if (gifs.includes(selectedBackground)) {
@@ -76,7 +77,14 @@ function applyBackground(selectedBackground = localStorage.getItem("selectedBack
         } else if (selectedBackground === "Light Gradient") {
             document.body.style.backgroundImage = "linear-gradient(to top, #e0eafc, #cfdef3)";
             return;
-        } else {
+        } else if (selectedBackground === "Custom Gradient") {
+            const customGradient = JSON.parse(localStorage.getItem("customGradients"));
+            document.body.style.backgroundImage = `linear-gradient(to top, ${customGradient[1]}, ${customGradient[0]})`;
+            return;
+        } else if (selectedBackground === "Default") {
+            document.body.style.backgroundImage = null;
+            return;
+        } else if (images.includes(selectedBackground)) {
             backgroundUrl = `/page/background/${selectedBackground}.webp`;
         }
 
@@ -107,6 +115,7 @@ function updatePlaceholders() {
         title: localStorage.getItem("selectedTitle") || "Default",
         font: localStorage.getItem("selectedFont") || "Inter",
         background: localStorage.getItem("selectedBackground") || "Default",
+        customGradient: JSON.parse(localStorage.getItem("customGradients")) || ["#000000", "#000000"],
         fetchLimit: localStorage.getItem("fetchLimit") || 21
     };
 
@@ -123,6 +132,12 @@ function updatePlaceholders() {
     document.getElementById("cardGlassCheck").checked = settings.cardGlass === null ? false : settings.cardGlass === "true";
     document.getElementById("backgroundSelect").value = settings.background || "Default";
     document.getElementById("fetchLimitInput").value = settings.fetchLimit;
+    document.getElementById("gradient1").value = settings.customGradient[0];
+    console.log(settings.customGradient[0]);
+    document.getElementById("gradient1Hex").value = settings.customGradient[0];
+    document.getElementById("gradient2Hex").value = settings.customGradient[1];
+    console.log(document.getElementById("gradient1").value);
+    document.getElementById("gradient2").value = settings.customGradient[1];
 }
 
 function initializeRangeInputs() {
@@ -222,6 +237,10 @@ function saveSettings() {
     localStorage.setItem("saveTime", getFetchTimeValue());
     localStorage.setItem("fetchLimit", getFetchLimitValue());
 
+    const customGradient1 = document.getElementById("gradient1").value;
+    const customGradient2 = document.getElementById("gradient2").value;
+    localStorage.setItem("customGradients", JSON.stringify([customGradient1, customGradient2]));
+
     const glassValues = getGlassValues();
     localStorage.setItem("navGlass", glassValues.navGlass);
     localStorage.setItem("cardGlass", glassValues.cardGlass);
@@ -237,6 +256,40 @@ function saveSettings() {
     applySettings();
 }
 
+function initializeColorPickers() {
+    const gradient1 = document.getElementById("gradient1");
+    const gradient1Hex = document.getElementById("gradient1Hex");
+    const gradient2 = document.getElementById("gradient2");
+    const gradient2Hex = document.getElementById("gradient2Hex");
+
+    // Synchronize Gradient 1
+    gradient1.addEventListener("input", () => {
+        gradient1Hex.value = gradient1.value;
+    });
+
+    gradient1Hex.addEventListener("input", () => {
+        if (/^#[0-9A-Fa-f]{6}$/.test(gradient1Hex.value)) {
+            gradient1.value = gradient1Hex.value;
+        }
+    });
+
+    // Synchronize Gradient 2
+    gradient2.addEventListener("input", () => {
+        gradient2Hex.value = gradient2.value;
+    });
+
+    gradient2Hex.addEventListener("input", () => {
+        if (/^#[0-9A-Fa-f]{6}$/.test(gradient2Hex.value)) {
+            gradient2.value = gradient2Hex.value;
+        }
+    });
+}
+
+// Call the function during initialization
+document.addEventListener("DOMContentLoaded", function () {
+    initializeColorPickers();
+});
+
 function applySettings() {
     applyGlass();
     applyBackground();
@@ -245,4 +298,5 @@ function applySettings() {
     updatePlaceholders();
     applyBlurDarken();
     applyNavbar();
+    initializeColorPickers();
 }
