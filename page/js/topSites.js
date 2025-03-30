@@ -46,23 +46,23 @@ function createSiteCard(site) {
     const card = document.createElement('a');
     card.href = site.url;
     card.className = "card card-sm drop-shadow-sm hover:drop-shadow-xl duration-200";
-    
+
     const cardBody = document.createElement('div');
     cardBody.className = "card-body items-center text-center p-4";
-    
+
     const img = document.createElement('img');
     img.src = site.icon;
     img.alt = site.name;
     img.className = "w-8 h-8 mb-1";
-    
+
     const title = document.createElement('h2');
     title.className = "text-sm font-medium truncate-text";
     title.textContent = site.name;
-    
+
     cardBody.appendChild(img);
     cardBody.appendChild(title);
     card.appendChild(cardBody);
-    
+
     return card;
 }
 
@@ -78,7 +78,7 @@ async function getTopSites() {
                     }
                 });
             });
-            
+
             return sites.slice(0, 5).map(site => ({
                 name: site.title || new URL(site.url).hostname.replace('www.', ''),
                 url: site.url,
@@ -92,7 +92,7 @@ async function getTopSites() {
                 icon: getFaviconUrl(site.url)
             }));
         }
-        
+
         console.log('No TopSites API available, using defaults');
         return defaultSites;
     } catch (e) {

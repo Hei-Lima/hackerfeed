@@ -1,29 +1,29 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Settings Modal
-  const settingsButton = document.getElementById("settingsButton");
-  const settingsModal = document.getElementById("settings");
-  const cancelBtn = document.getElementById("cancelBtn");
-  const saveBtn = document.getElementById("saveBtn");
+    // Settings Modal
+    const settingsButton = document.getElementById("settingsButton");
+    const settingsModal = document.getElementById("settings");
+    const cancelBtn = document.getElementById("cancelBtn");
+    const saveBtn = document.getElementById("saveBtn");
 
-  settingsButton.addEventListener("click", function () {
-    settingsModal.showModal();
-  });
+    settingsButton.addEventListener("click", function () {
+        settingsModal.showModal();
+    });
 
-  cancelBtn.addEventListener("click", function () {
-    settingsModal.close();
+    cancelBtn.addEventListener("click", function () {
+        settingsModal.close();
+        applySettings(); // Changed from change()
+    });
+
+    saveBtn.addEventListener("click", function () {
+        saveSettings(); // Changed from Save()
+        settingsModal.close();
+    });
+
+    // Other initializations
     applySettings(); // Changed from change()
-  });
-
-  saveBtn.addEventListener("click", function () {
-    saveSettings(); // Changed from Save()
-    settingsModal.close();
-  });
-
-  // Other initializations
-  applySettings(); // Changed from change()
-  initializeRangeInputs();
+    initializeRangeInputs();
 });
 
 // --- Refactored Title Function ---

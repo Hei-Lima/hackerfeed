@@ -1,471 +1,354 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="hackerfeed-dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hackerfeed</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="shortcut icon"
-      href="page/media/favico.ico"
-      type="image/x-icon"
-    />
-    <link
-      href="page/css/output.css"
-      rel="stylesheet"
-      id="mainStyle"
-      media="all"
-    />
-    <link
-      href="page/css/frutiger.css"
-      rel="stylesheet"
-      id="frutigerStyleCard"
-      media="none"
-    />
-    <link
-      href="page/css/frutigerNav.css"
-      rel="stylesheet"
-      id="frutigerStyleNav"
-      media="none"
-    />
-    <link
-      href="page/css/background.css"
-      rel="stylesheet"
-      id="background"
-      media="all"
-    />
-    <script src="page/js/index.js"></script>
-    <!-- FONTS -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
-  </head>
 
-  <body class="bg-base-200 font-display flex flex-col min-h-screen">
-    <div id="background-container"></div>
-    <!-- Background container -->
-    <div id="overlay-container"></div>
-    <div id="content-container">
-      <div class="background-image"></div>
-      <!-- Navbar -->
-      <nav class="navbar px-6" id="navbar">
-        <div class="flex-1">
-          <a
-            href="https://hackernews.com"
-            class="btn btn-ghost text-3xl text-primary"
-            >hackerfeed</a
-          >
-        </div>
-        <div class="flex-none">
-          <div class="dropdown dropdown-end">
-            <div tabindex="0" role="button" class="btn m-1">
-              <span>Theme</span>
-              <svg
-                width="12px"
-                height="12px"
-                class="inline-block h-2 w-2 fill-current opacity-60"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 2048 2048"
-              >
-                <path
-                  d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"
-                ></path>
-              </svg>
-            </div>
-            <ul
-              tabindex="0"
-              class="dropdown-content menu bg-base-200 rounded-box w-52 p-2 shadow-2xl mt-2 border border-base-300"
-            >
-              <li>
-                <button
-                  data-set-theme="hackerfeed-dark"
-                  data-act-class="active"
-                >
-                  Hackerfeed Dark
-                </button>
-              </li>
-              <li>
-                <button
-                  data-set-theme="hackerfeed-light"
-                  data-act-class="active"
-                >
-                  Hackerfeed Light
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="gruvbox" data-act-class="active">
-                  Gruvbox
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="onedark" data-act-class="active">
-                  One Dark
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="monokai" data-act-class="active">
-                  Monokai
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="solarized" data-act-class="active">
-                  Solarized Dark
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="pitchdark" data-act-class="active">
-                  Pitch Dark
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="cupcake" data-act-class="active">
-                  Cupcake
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="emerald" data-act-class="active">
-                  Emerald
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="corporate" data-act-class="active">
-                  Corporate
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="retro" data-act-class="active">
-                  Retro
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="cyberpunk" data-act-class="active">
-                  Cyberpunk
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="synthwave" data-act-class="active">
-                  Synthwave
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="forest" data-act-class="active">
-                  Forest
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="black" data-act-class="active">
-                  Black
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="dracula" data-act-class="active">
-                  Dracula
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="caramellatte" data-act-class="active">
-                  Caramel Latte
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="abyss" data-act-class="active">
-                  Abyss
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="silk" data-act-class="active">
-                  Silk
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="hotdog" data-act-class="active">
-                  Hotdog
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="blackpink" data-act-class="active">
-                  Blackpink
-                </button>
-              </li>
-              <li>
-                <button data-set-theme="love" data-act-class="active">
-                  Love ❤️
-                </button>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <button class="btn btn-ghost btn-circle" id="settingsButton">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </button>
+<head>
+  	<!-- Meta Tags -->
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Hackerfeed</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link rel="shortcut icon" href="page/media/favico.ico" type="image/x-icon" />
+	<link href="page/css/output.css" rel="stylesheet" id="mainStyle" media="all" />
+	<link href="page/css/frutiger.css" rel="stylesheet" id="frutigerStyleCard" media="none" />
+	<link href="page/css/frutigerNav.css" rel="stylesheet" id="frutigerStyleNav" media="none" />
+	<link href="page/css/background.css" rel="stylesheet" id="background" media="all" />
+	<script src="page/js/index.js"></script>
+	<!-- FONTS -->
+	<link
+		href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+		rel="stylesheet" />
+</head>
 
-        <!-- Settings Modal -->
-        <dialog id="settings" class="modal">
-          <div class="modal-box max-w-xl">
-            <h3 class="font-bold text-lg">⚙️ Settings</h3>
+<body class="bg-base-200 font-display flex flex-col min-h-screen">
+	<div id="background-container"></div>
+	<!-- Background container -->
+	<div id="overlay-container"></div>
+	<div id="content-container">
+		<div class="background-image"></div>
+		<!-- Navbar -->
+		<nav class="navbar px-6" id="navbar">
+			<div class="flex-1">
+				<a href="https://hackernews.com" class="btn btn-ghost text-3xl text-primary">hackerfeed</a>
+			</div>
+			<div class="flex-none">
+				<div class="dropdown dropdown-end">
+					<div tabindex="0" role="button" class="btn m-1">
+						<span>Theme</span>
+						<svg width="12px" height="12px" class="inline-block h-2 w-2 fill-current opacity-60"
+							xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048">
+							<path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
+						</svg>
+					</div>
+					<ul tabindex="0"
+						class="dropdown-content menu bg-base-200 rounded-box w-52 p-2 shadow-2xl mt-2 border border-base-300">
+						<li>
+							<button data-set-theme="hackerfeed-dark" data-act-class="active">
+								Hackerfeed Dark
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="hackerfeed-light" data-act-class="active">
+								Hackerfeed Light
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="gruvbox" data-act-class="active">
+								Gruvbox
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="onedark" data-act-class="active">
+								One Dark
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="monokai" data-act-class="active">
+								Monokai
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="solarized" data-act-class="active">
+								Solarized Dark
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="pitchdark" data-act-class="active">
+								Pitch Dark
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="cupcake" data-act-class="active">
+								Cupcake
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="emerald" data-act-class="active">
+								Emerald
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="corporate" data-act-class="active">
+								Corporate
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="retro" data-act-class="active">
+								Retro
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="cyberpunk" data-act-class="active">
+								Cyberpunk
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="synthwave" data-act-class="active">
+								Synthwave
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="forest" data-act-class="active">
+								Forest
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="black" data-act-class="active">
+								Black
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="dracula" data-act-class="active">
+								Dracula
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="caramellatte" data-act-class="active">
+								Caramel Latte
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="abyss" data-act-class="active">
+								Abyss
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="silk" data-act-class="active">
+								Silk
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="hotdog" data-act-class="active">
+								Hotdog
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="blackpink" data-act-class="active">
+								Blackpink
+							</button>
+						</li>
+						<li>
+							<button data-set-theme="love" data-act-class="active">
+								Love ❤️
+							</button>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<button class="btn btn-ghost btn-circle" id="settingsButton">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+					<path fill-rule="evenodd"
+						d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+						clip-rule="evenodd" />
+				</svg>
+			</button>
 
-            <div class="space-y-4">
-              <!-- Font Selection -->
-              <div class="form-control">
-                <label class="label">
-                  <span class="label-text font-medium">Font</span>
-                </label>
-                <select class="select select-bordered w-full" id="fontSelect">
-                  <option disabled selected>Pick a font</option>
-                  <option>Inter</option>
-                  <option>Poppins</option>
-                  <option>EB Garamond</option>
-                  <option>IBM Plex Sans</option>
-                  <option>JetBrains Mono</option>
-                  <option>Montserrat</option>
-                  <option>Newsreader</option>
-                  <option>Roboto</option>
-                </select>
-              </div>
+			<!-- Settings Modal -->
+			<dialog id="settings" class="modal">
+				<div class="modal-box max-w-xl">
+					<h3 class="font-bold text-lg">⚙️ Settings</h3>
 
-              <!-- Custom Gradient -->
-              <input class="input input-bordered w-full" type="color" />
+					<div class="space-y-4">
+						<!-- Font Selection -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text font-medium">Font</span>
+							</label>
+							<select class="select select-bordered w-full" id="fontSelect">
+								<option disabled selected>Pick a font</option>
+								<option>Inter</option>
+								<option>Poppins</option>
+								<option>EB Garamond</option>
+								<option>IBM Plex Sans</option>
+								<option>JetBrains Mono</option>
+								<option>Montserrat</option>
+								<option>Newsreader</option>
+								<option>Roboto</option>
+							</select>
+						</div>
 
-              <!-- Background Selection -->
-              <div class="form-control">
-                <label class="label">
-                  <span class="label-text font-medium">Background</span>
-                </label>
-                <select
-                  class="select select-bordered w-full"
-                  id="backgroundSelect"
-                >
-                  <option disabled selected>Pick a background</option>
-                  <option>Default</option>
-                  <option>Dark Gradient</option>
-                  <option>Light Gradient</option>
-                  <option>Frutiger</option>
-                  <option>Glass</option>
-                  <option>Matrix</option>
-                  <option>Genesis</option>
-                </select>
-              </div>
+						<!-- Custom Gradient -->
+						<div class <input class="input input-bordered w-full" type="color" />
 
-              <!-- Title Style Selection -->
-              <div class="form-control">
-                <label class="label">
-                  <span class="label-text font-medium">Title Style</span>
-                </label>
-                <select class="select select-bordered w-full" id="titleSelect">
-                  <option disabled selected>Pick a style</option>
-                  <option>Default</option>
-                  <option>Neon</option>
-                  <option>Frutiger</option>
-                </select>
-              </div>
+						<!-- Background Selection -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text font-medium">Background</span>
+							</label>
+							<select class="select select-bordered w-full" id="backgroundSelect">
+								<option disabled selected>Pick a background</option>
+								<option>Default</option>
+								<option>Dark Gradient</option>
+								<option>Light Gradient</option>
+								<option>Frutiger</option>
+								<option>Glass</option>
+								<option>Matrix</option>
+								<option>Genesis</option>
+							</select>
+						</div>
 
-              <!-- Ghost Navbar Toggle -->
-              <div class="form-control">
-                <label class="label cursor-pointer">
-                  <span class="label-text font-medium">Ghost Navbar</span>
-                  <input type="checkbox" class="toggle" id="ghostNavCheck" />
-                </label>
-              </div>
+						<!-- Title Style Selection -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text font-medium">Title Style</span>
+							</label>
+							<select class="select select-bordered w-full" id="titleSelect">
+								<option disabled selected>Pick a style</option>
+								<option>Default</option>
+								<option>Neon</option>
+								<option>Frutiger</option>
+							</select>
+						</div>
 
-              <!-- Glassmorphic Effects -->
-              <div class="form-control">
-                <label class="label">
-                  <span class="label-text font-medium"
-                    >Glassmorphic Effects
-                    <span class="badge badge-warning">Experimental</span></span
-                  >
-                </label>
-                <div class="flex items-center gap-4">
-                  <label class="flex items-center gap-2 cursor-pointer">
-                    <span>Cards</span>
-                    <input type="checkbox" class="toggle" id="cardGlassCheck" />
-                  </label>
-                  <label class="flex items-center gap-2 cursor-pointer">
-                    <span>Navbar</span>
-                    <input
-                      type="checkbox"
-                      class="toggle"
-                      id="navbarGlassCheck"
-                    />
-                  </label>
-                </div>
-              </div>
+						<!-- Ghost Navbar Toggle -->
+						<div class="form-control">
+							<label class="label cursor-pointer">
+								<span class="label-text font-medium">Ghost Navbar</span>
+								<input type="checkbox" class="toggle" id="ghostNavCheck" />
+							</label>
+						</div>
 
-              <!-- Background Blur -->
-              <div class="form-control">
-                <label class="label">
-                  <span class="label-text font-medium">Background Blur</span>
-                  <span class="label-text-alt" id="blurValue">5px</span>
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="20"
-                  value="0"
-                  class="range range-sm"
-                  id="blurRange"
-                />
-              </div>
+						<!-- Glassmorphic Effects -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text font-medium">Glassmorphic Effects
+									<span class="badge badge-warning">Experimental</span></span>
+							</label>
+							<div class="flex items-center gap-4">
+								<label class="flex items-center gap-2 cursor-pointer">
+									<span>Cards</span>
+									<input type="checkbox" class="toggle" id="cardGlassCheck" />
+								</label>
+								<label class="flex items-center gap-2 cursor-pointer">
+									<span>Navbar</span>
+									<input type="checkbox" class="toggle" id="navbarGlassCheck" />
+								</label>
+							</div>
+						</div>
 
-              <!-- Background Darkness -->
-              <div class="form-control">
-                <label class="label">
-                  <span class="label-text font-medium"
-                    >Background Darkness</span
-                  >
-                  <span class="label-text-alt" id="darkenValue">30%</span>
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value="0"
-                  class="range range-sm"
-                  id="darkenRange"
-                />
-              </div>
+						<!-- Background Blur -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text font-medium">Background Blur</span>
+								<span class="label-text-alt" id="blurValue">5px</span>
+							</label>
+							<input type="range" min="0" max="20" value="0" class="range range-sm" id="blurRange" />
+						</div>
 
-              <!-- Stories Refresh Interval -->
-              <div class="form-control">
-                <label class="label">
-                  <span class="label-text font-medium"
-                    >Stories Refresh Interval (minutes)</span
-                  >
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  placeholder="15"
-                  class="input input-bordered w-full"
-                  id="fetchTimeInput"
-                />
-                <label class="label">
-                  <span class="label-text-alt"
-                    >How often Hackerfeed will fetch new stories (default: 15
-                    min)</span
-                  >
-                </label>
-              </div>
+						<!-- Background Darkness -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text font-medium">Background Darkness</span>
+								<span class="label-text-alt" id="darkenValue">30%</span>
+							</label>
+							<input type="range" min="0" max="100" value="0" class="range range-sm" id="darkenRange" />
+						</div>
 
-              <!-- Fetch Limit -->
-              <div class="form-control">
-                <label class="label">
-                  <span class="label-text font-medium">Fetch Limit</span>
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  max="50"
-                  placeholder="10"
-                  class="input input-bordered w-full"
-                  id="fetchLimitInput"
-                />
-                <label class="label">
-                  <span class="label-text-alt"
-                    >How many stories to fetch (default: 21, multiple of 3 for
-                    grid)</span
-                  >
-                </label>
-              </div>
-            </div>
+						<!-- Stories Refresh Interval -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text font-medium">Stories Refresh Interval (minutes)</span>
+							</label>
+							<input type="number" min="0" placeholder="15" class="input input-bordered w-full"
+								id="fetchTimeInput" />
+							<label class="label">
+								<span class="label-text-alt">How often Hackerfeed will fetch new stories (default: 15
+									min)</span>
+							</label>
+						</div>
 
-            <!-- Modal Actions -->
-            <div class="modal-action justify-end">
-              <form method="dialog" class="flex gap-2">
-                <button class="btn" id="cancelBtn">Cancel</button>
-                <button class="btn btn-success" id="saveBtn">Save</button>
-              </form>
-            </div>
-          </div>
+						<!-- Fetch Limit -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text font-medium">Fetch Limit</span>
+							</label>
+							<input type="number" min="0" max="50" placeholder="10" class="input input-bordered w-full"
+								id="fetchLimitInput" />
+							<label class="label">
+								<span class="label-text-alt">How many stories to fetch (default: 21, multiple of 3 for
+									grid)</span>
+							</label>
+						</div>
+					</div>
 
-          <form method="dialog" class="modal-backdrop">
-            <button>Close</button>
-          </form>
-        </dialog>
-      </nav>
+					<!-- Modal Actions -->
+					<div class="modal-action justify-end">
+						<form method="dialog" class="flex gap-2">
+							<button class="btn" id="cancelBtn">Cancel</button>
+							<button class="btn btn-success" id="saveBtn">Save</button>
+						</form>
+					</div>
+				</div>
 
-      <main class="flex flex-col items-center flex-grow space-y-12 py-16">
-        <div id="title">
-          <!-- <h1 class="text-6xl md:text-8xl font-bold text-primary drop-shadow-md">hackerfeed</h1>
+				<form method="dialog" class="modal-backdrop">
+					<button>Close</button>
+				</form>
+			</dialog>
+		</nav>
+
+		<main class="flex flex-col items-center flex-grow space-y-12 py-16">
+			<div id="title">
+				<!-- <h1 class="text-6xl md:text-8xl font-bold text-primary drop-shadow-md">hackerfeed</h1>
                   -->
-          <img
-            src="page/titles/neon.svg"
-            alt="Hackerfeed"
-            class="w-96 md:w-120"
-          />
-        </div>
+				<img src="page/titles/neon.svg" alt="Hackerfeed" class="w-96 md:w-120" />
+			</div>
 
-        <form id="searchForm" class="w-full max-w-2xl px-4">
-          <label
-            class="input input-bordered border-base-300 flex items-center gap-3 h-14 text-lg w-full"
-          >
-            <svg
-              class="h-7 w-7 opacity-50"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <g
-                stroke-linejoin="round"
-                stroke-linecap="round"
-                stroke-width="2.5"
-                fill="none"
-                stroke="currentColor"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.3-4.3"></path>
-              </g>
-            </svg>
-            <input
-              type="search"
-              id="searchInput"
-              placeholder="Search with default engine"
-              class="text-lg w-full"
-            />
-          </label>
-        </form>
+			<form id="searchForm" class="w-full max-w-2xl px-4">
+				<label class="input input-bordered border-base-300 flex items-center gap-3 h-14 text-lg w-full">
+					<svg class="h-7 w-7 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none"
+							stroke="currentColor">
+							<circle cx="11" cy="11" r="8"></circle>
+							<path d="m21 21-4.3-4.3"></path>
+						</g>
+					</svg>
+					<input type="search" id="searchInput" placeholder="Search with default engine"
+						class="text-lg w-full" />
+				</label>
+			</form>
 
-        <div
-          id="topSites"
-          class="max-w-[90rem] mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 px-4 sm:px-6 lg:px-8"
-        ></div>
+			<div id="topSites"
+				class="max-w-[90rem] mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 px-4 sm:px-6 lg:px-8">
+			</div>
 
-        <div
-          id="stories"
-          class="max-w-[90rem] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-8"
-        ></div>
-      </main>
+			<div id="stories"
+				class="max-w-[90rem] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-8">
+			</div>
+		</main>
 
-      <footer class="bg-base-200 text-base-content text-center py-6 mt-10">
-        <p>
-          Hackerfeed is made by
-          <a href="https://hei-lima.tech" class="text-primary hover:underline"
-            >Heitor Lima</a
-          >
-          and powered by Hacker News. Want to
-          <a
-            href="https://github.com/Hei-Lima/hackerfeed"
-            class="text-primary hover:underline"
-            >contribute</a
-          >?
-        </p>
-      </footer>
+		<footer class="bg-base-200 text-base-content text-center py-6 mt-10">
+			<p>
+				Hackerfeed is made by
+				<a href="https://hei-lima.tech" class="text-primary hover:underline">Heitor Lima</a>
+				and powered by Hacker News. Want to
+				<a href="https://github.com/Hei-Lima/hackerfeed" class="text-primary hover:underline">contribute</a>?
+			</p>
+		</footer>
 
-      <script src="page/js/settings.js"></script>
-      <script src="page/js/scripts.js"></script>
-      <script src="page/js/topSites.js"></script>
-    </div>
-  </body>
+		<script src="page/js/settings.js"></script>
+		<script src="page/js/scripts.js"></script>
+		<script src="page/js/topSites.js"></script>
+	</div>
+</body>
+
 </html>
