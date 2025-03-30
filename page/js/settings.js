@@ -48,7 +48,6 @@ function applyTitle(selectedTitle = localStorage.getItem("selectedTitle") || "De
     document.getElementById("titleSelect").value = selectedTitle;
 }
 
-// --- Refactored Font Function ---
 function applyFont(selectedFont = localStorage.getItem("selectedFont") || "Inter") {
     document.documentElement.style.setProperty("--font-display", `"${selectedFont}", "sans-serif"`);
     document.getElementById("fontSelect").value = selectedFont;
@@ -107,6 +106,7 @@ function updatePlaceholders() {
         darken: localStorage.getItem("darken") || 0,
         title: localStorage.getItem("selectedTitle") || "Default",
         font: localStorage.getItem("selectedFont") || "Inter",
+        background: localStorage.getItem("selectedBackground") || "Default",
         fetchLimit: localStorage.getItem("fetchLimit") || 21
     };
 
@@ -121,7 +121,7 @@ function updatePlaceholders() {
     document.getElementById("fetchTimeInput").value = settings.saveTime;
     document.getElementById("navbarGlassCheck").checked = settings.navGlass === null ? false : settings.navGlass === "true";
     document.getElementById("cardGlassCheck").checked = settings.cardGlass === null ? false : settings.cardGlass === "true";
-    document.getElementById("backgroundSelect").value = localStorage.getItem("selectedBackground") || "Pick a Background";
+    document.getElementById("backgroundSelect").value = settings.background || "Default";
     document.getElementById("fetchLimitInput").value = settings.fetchLimit;
 }
 
@@ -178,7 +178,6 @@ function initializeRangeInputs() {
     });
 }
 
-// --- Saving Values ---
 function getFontValue() {
     return document.getElementById("fontSelect").value;
 }
