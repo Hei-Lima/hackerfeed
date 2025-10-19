@@ -10,8 +10,6 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link rel="shortcut icon" href="page/media/favico.ico" type="image/x-icon" />
 	<link href="page/css/output.css" rel="stylesheet" id="mainStyle" media="all" />
-	<link href="page/css/frutiger.css" rel="stylesheet" id="frutigerStyleCard" media="none" />
-	<link href="page/css/frutigerNav.css" rel="stylesheet" id="frutigerStyleNav" media="none" />
 	<link href="page/css/background.css" rel="stylesheet" id="background" media="all" />
 	<script src="page/js/index.js"></script>
 	<!-- FONTS -->
@@ -189,99 +187,6 @@
 							</select>
 						</div>
 
-						<!-- Background Selection -->
-						<div class="form-control">
-							<label class="label">
-								<span class="label-text font-medium">Background</span>
-							</label>
-							<select class="select select-bordered w-full" id="backgroundSelect">
-								<option disabled selected>Pick a background</option>
-								<option>Default</option>
-								<option>Custom Gradient</option>
-								<option>Dark Gradient</option>
-								<option>Light Gradient</option>
-								<option>Frutiger</option>
-								<option>Glass</option>
-								<option>Matrix</option>
-								<option>Genesis</option>
-							</select>
-						</div>
-
-						<!-- Custom Gradient -->
-						<div class="form-control space-y-4">
-							<div class="flex items-center gap-4">
-							  <label class="label">
-								<span class="label-text font-medium">Gradient Color 1</span>
-							  </label>
-							  <input class="w-16" type="color" id="gradient1" />
-							  <input class="input input-bordered w-full" type="text" id="gradient1Hex" placeholder="#000000" />
-							</div>
-							<div class="flex items-center gap-4">
-							  <label class="label">
-								<span class="label-text font-medium">Gradient Color 2</span>
-							  </label>
-							  <input class="w-16" type="color" id="gradient2" />
-							  <input class="input input-bordered w-full" type="text" id="gradient2Hex" placeholder="#000000" />
-							</div>
-						</div>
-
-						<!-- Title Style Selection -->
-						<div class="form-control">
-							<label class="label">
-								<span class="label-text font-medium">Title Style</span>
-							</label>
-							<select class="select select-bordered w-full" id="titleSelect">
-								<option disabled selected>Pick a style</option>
-								<option>Default</option>
-								<option>Neon</option>
-								<option>Frutiger</option>
-							</select>
-						</div>
-
-						<!-- Ghost Navbar Toggle -->
-						<div class="form-control">
-							<label class="label cursor-pointer">
-								<span class="label-text font-medium">Ghost Navbar</span>
-								<input type="checkbox" class="toggle" id="ghostNavCheck" />
-							</label>
-						</div>
-
-						<!-- Glassmorphic Effects -->
-						<div class="form-control">
-							<label class="label">
-								<span class="label-text font-medium">Glassmorphic Effects
-									<span class="badge badge-warning">Experimental</span></span>
-							</label>
-							<div class="flex items-center gap-4">
-								<label class="flex items-center gap-2 cursor-pointer">
-									<span>Cards</span>
-									<input type="checkbox" class="toggle" id="cardGlassCheck" />
-								</label>
-								<label class="flex items-center gap-2 cursor-pointer">
-									<span>Navbar</span>
-									<input type="checkbox" class="toggle" id="navbarGlassCheck" />
-								</label>
-							</div>
-						</div>
-
-						<!-- Background Blur -->
-						<div class="form-control">
-							<label class="label">
-								<span class="label-text font-medium">Background Blur</span>
-								<span class="label-text-alt" id="blurValue">5px</span>
-							</label>
-							<input type="range" min="0" max="20" value="0" class="range range-sm" id="blurRange" />
-						</div>
-
-						<!-- Background Darkness -->
-						<div class="form-control">
-							<label class="label">
-								<span class="label-text font-medium">Background Darkness</span>
-								<span class="label-text-alt" id="darkenValue">30%</span>
-							</label>
-							<input type="range" min="0" max="100" value="0" class="range range-sm" id="darkenRange" />
-						</div>
-
 						<!-- Stories Refresh Interval -->
 						<div class="form-control">
 							<label class="label">
@@ -326,9 +231,7 @@
 
 		<main class="flex flex-col items-center flex-grow space-y-12 py-16">
 			<div id="title">
-				<!-- <h1 class="text-6xl md:text-8xl font-bold text-primary drop-shadow-md">hackerfeed</h1>
-                  -->
-				<img src="page/titles/neon.svg" alt="Hackerfeed" class="w-96 md:w-120" />
+				<h1 class="text-6xl md:text-8xl font-bold text-primary drop-shadow-md">hackerfeed</h1>    
 			</div>
 
 			<form id="searchForm" class="w-full max-w-2xl px-4">
