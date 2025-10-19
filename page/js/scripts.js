@@ -73,8 +73,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 	setInterval(updateSearchEngines, parseInt(intervalMinutes, 10) * 60 * 1000);
 
-	const storiesContainer = document.getElementById("stories");
-
 	async function fetchTopStories() {
 		const response = await fetch(
 			"https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty"
@@ -211,12 +209,20 @@ document.addEventListener("DOMContentLoaded", async function () {
 			now - cacheTime > fetchInterval * 60 * 1000
 		) {
 			const topStoryIds = await fetchTopStories();
-			topStories = [];
+			newTopStories = [];
+			
 			for (const id of topStoryIds) {
-				const story = await fetchStory(id);
-				topStories.push(story);
+				const cachedStory = topStories?.find(story => story.id === id);
+				if (cachedStory) {
+					newTopStories.push(cachedStory);
+				} else {
+					const story = await fetchStory(id);
+					newTopStories.push(story);
+				}
 			}
-			localStorage.setItem("topStories", JSON.stringify(topStories));
+			
+			topStories = newTopStories;
+			localStorage.setItem("topStories", JSON.stringify(newTopStories));
 			localStorage.setItem("cacheTime", now);
 		}
 
