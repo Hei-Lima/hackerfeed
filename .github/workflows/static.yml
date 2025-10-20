@@ -44,14 +44,22 @@ jobs:
       - name: Build CSS
         run: npx tailwindcss -i ./page/css/input.css -o ./page/css/output.css --minify
       
+      - name: Copy static files to staging directory
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp -r page _site/
+          # If you have icons or other assets, copy them as needed:
+          # cp -r icons _site/
+      
       - name: Setup Pages
         uses: actions/configure-pages@v5
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          # Upload only the static site files
+          path: './_site'
       
       - name: Deploy to GitHub Pages
         id: deployment
