@@ -58,3 +58,5 @@ yarn.lock
 ##################
 .env
 page/css/output.css
+
+.venv
