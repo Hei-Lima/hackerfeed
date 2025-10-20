@@ -1,4 +1,6 @@
-let FETCHLIMIT = Number(localStorage.getItem("fetchLimit")) || 21;
+let rawFetchLimit = localStorage.getItem("fetchLimit");
+let parsedFetchLimit = Number(rawFetchLimit);
+let FETCHLIMIT = !isNaN(parsedFetchLimit) && rawFetchLimit !== null ? parsedFetchLimit : 21;
 const searchInput = document.getElementById("searchInput");
 document.addEventListener("DOMContentLoaded", async function () {
 	async function updateSearchEngines() {
