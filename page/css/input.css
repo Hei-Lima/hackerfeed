@@ -39,7 +39,7 @@
 
 @plugin "daisyui/theme" {
   name: "hackerfeed-light";
-  default: false;
+  default: true;
   prefersdark: false;
   color-scheme: "light";
   --color-base-100: oklch(98% 0 0);
@@ -776,12 +776,6 @@
   --border: 2px;
   --depth: 0;
   --noise: 1;
-}
-
-@theme {  --font-display: "Inter", "sans-serif"; }
-
-@utility .font-display {
-  font-family: var(--font-display);
 }
 
 .truncate-text {
