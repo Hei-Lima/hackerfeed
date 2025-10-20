@@ -1,5 +1,4 @@
 let FETCHLIMIT = Number(localStorage.getItem("fetchLimit")) || 21;
-console.log(FETCHLIMIT);
 const searchInput = document.getElementById("searchInput");
 document.addEventListener("DOMContentLoaded", async function () {
 	async function updateSearchEngines() {

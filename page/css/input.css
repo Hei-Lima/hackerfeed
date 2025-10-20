@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
 @plugin "@tailwindcss/typography";
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 @plugin "daisyui/theme" {
   name: "hackerfeed-dark";
@@ -781,12 +780,16 @@
   --noise: 1;
 }
 
-  @theme {  --font-display: "Inter", "sans-serif"; }
+@theme {  --font-display: "Inter", "sans-serif"; }
 
-  .truncate-text {
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 100%; /* Ajuste conforme necessário */
+@utility .font-display {
+  font-family: var(--font-display);
+}
+
+.truncate-text {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }

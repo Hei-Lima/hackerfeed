@@ -17,17 +17,36 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     saveBtn.addEventListener("click", function () {
-        settingsModal.close();
         saveSettings();
+        settingsModal.close();
     });
 
     applySettings(); 
     initializeRangeInputs();
 });
 
+// Pilhas com fallbacks adequados
+const FONT_STACKS = {
+  "Inter": '"Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+  "Poppins": '"Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+  "EB Garamond": '"EB Garamond", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
+  "IBM Plex Sans": '"IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+  "JetBrains Mono": '"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+  "Montserrat": '"Montserrat", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+  "Newsreader": '"Newsreader", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
+  "Roboto": '"Roboto", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif',
+};
+
 function applyFont(selectedFont = localStorage.getItem("selectedFont") || "Inter") {
-    document.documentElement.style.setProperty("--font-display", `"${selectedFont}", "sans-serif"`);
-    document.getElementById("fontSelect").value = selectedFont;
+    const stack = FONT_STACKS[selectedFont] || FONT_STACKS["Inter"];
+    
+    // Aplica diretamente no body
+    document.body.style.fontFamily = stack;
+    
+    const sel = document.getElementById("fontSelect");
+    if (sel) sel.value = selectedFont;
+    
+    console.log(`Font applied: ${selectedFont} -> ${stack}`);
 }
 
 function updatePlaceholders() {
@@ -49,7 +68,9 @@ function initializeRangeInputs() {
     const fetchLimitInput = document.getElementById("fetchLimitInput");
 
     fontSelect.addEventListener("change", function () {
-        applyFont(this.value);
+        const selectedFont = this.value;
+        console.log(`Font changed to: ${selectedFont}`);
+        applyFont(selectedFont);
     });
 
     fetchTimeInput.addEventListener("input", function () {
@@ -74,10 +95,16 @@ function getFetchTimeValue() {
 }
 
 function saveSettings() {
-    localStorage.setItem("selectedFont", getFontValue());
-    localStorage.setItem("saveTime", getFetchTimeValue());
-    localStorage.setItem("fetchLimit", getFetchLimitValue());
-
+    const selectedFont = getFontValue();
+    const saveTime = getFetchTimeValue();
+    const fetchLimit = getFetchLimitValue();
+    
+    localStorage.setItem("selectedFont", selectedFont);
+    localStorage.setItem("saveTime", saveTime);
+    localStorage.setItem("fetchLimit", fetchLimit);
+    
+    console.log(`Settings saved: Font=${selectedFont}, Time=${saveTime}, Limit=${fetchLimit}`);
+    
     applySettings();
 }
 
