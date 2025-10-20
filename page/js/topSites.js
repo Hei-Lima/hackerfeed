@@ -32,66 +32,98 @@ const defaultSites = [
     }
 ];
 
+function getFaviconUrl(url) {
+    try {
+        const domain = new URL(url).hostname;
+        return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+    } catch (e) {
+        return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAnklEQVQ4jWNgGDTg/3/d/zCMTw6nGmI1g9ggvWADYGx0cZghIHEYBomD5EBqwQYg24BNM7IhMM0wA5DFwAbANKNrRjaEgYGBgfE/EQCnGnQXYNOMbAheF+DTjOydb/9xAGQ16C5AVQwHonAXoIcDLs0YLkDXjM0QDANwacZmCNwAXJqRDYEbgEszsiFwA/BpRjYEbgAJmgcnAADh0mcjz+91dwAAAABJRU5ErkJggg==';
+    }
+}
+
 // Function to create site card HTML
 function createSiteCard(site) {
     const card = document.createElement('a');
     card.href = site.url;
     card.className = "card card-sm drop-shadow-sm hover:drop-shadow-xl duration-200";
-    
+
     const cardBody = document.createElement('div');
     cardBody.className = "card-body items-center text-center p-4";
-    
+
     const img = document.createElement('img');
     img.src = site.icon;
     img.alt = site.name;
     img.className = "w-8 h-8 mb-1";
-    
+
     const title = document.createElement('h2');
-    title.className = "text-sm font-medium";
+    title.className = "text-sm font-medium truncate-text";
     title.textContent = site.name;
-    
+
     cardBody.appendChild(img);
     cardBody.appendChild(title);
     card.appendChild(cardBody);
-    
+
     return card;
 }
 
 async function getTopSites() {
-    if (typeof browser !== 'undefined' && browser.topSites) {
-        try {
-            const sites = await browser.topSites.get({ limit: 5 });
-            return sites.map(site => {
-                const url = new URL(site.url);
-                const hostname = url.hostname.replace('www.', '');
-                const name = site.title || hostname.split('.')[0];
-                return {
-                    name: name.charAt(0).toUpperCase() + name.slice(1),
-                    url: site.url,
-                    icon: `https://www.google.com/s2/favicons?domain=${url.hostname}&sz=64`
-                };
+    try {
+        if (typeof chrome !== 'undefined' && chrome.topSites) {
+            const sites = await new Promise((resolve, reject) => {
+                chrome.topSites.get((result) => {
+                    if (chrome.runtime.lastError) {
+                        reject(chrome.runtime.lastError);
+                    } else {
+                        resolve(result);
+                    }
+                });
             });
-        } catch (e) {
-            console.log('TopSites API not available:', e);
-            return defaultSites;
+
+            return sites.slice(0, 5).map(site => ({
+                name: site.title || new URL(site.url).hostname.replace('www.', ''),
+                url: site.url,
+                icon: getFaviconUrl(site.url)
+            }));
+        } else if (typeof browser !== 'undefined' && browser.topSites) {
+            const sites = await browser.topSites.get();
+            return sites.slice(0, 5).map(site => ({
+                name: site.title || new URL(site.url).hostname.replace('www.', ''),
+                url: site.url,
+                icon: getFaviconUrl(site.url)
+            }));
         }
+
+        console.log('No TopSites API available, using defaults');
+        return defaultSites;
+    } catch (e) {
+        console.error('Error getting top sites:', e);
+        return defaultSites;
     }
-    return defaultSites;
 }
 
 async function populateTopSites() {
     const topSitesContainer = document.getElementById('topSites');
-    if (topSitesContainer) {
+    if (!topSitesContainer) return;
+
+    try {
         const sites = await getTopSites();
-        // Clear existing content
         topSitesContainer.textContent = '';
-        // Append each card directly
         sites.forEach(site => {
+            const card = createSiteCard(site);
+            topSitesContainer.appendChild(card);
+        });
+    } catch (error) {
+        console.error('Error populating top sites:', error);
+        // Fallback to default sites if there's an error
+        defaultSites.forEach(site => {
             const card = createSiteCard(site);
             topSitesContainer.appendChild(card);
         });
     }
 }
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', populateTopSites);
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', populateTopSites);
+} else {
+    populateTopSites();
+}

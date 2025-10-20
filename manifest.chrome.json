@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "Hackerfeed for Hacker News",
+    "version": "3.1.0",
+    "description": "Replaces the Chrome new tab with Hackerfeed, providing a curated feed of tech news and updates. Powered by Hacker News.",
+    "icons": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "chrome_url_overrides": {
+      "newtab": "index.html"
+    },
+    "permissions": [
+      "topSites",
+      "search"
+    ],
+    "host_permissions": [
+      "https://hacker-news.firebaseio.com/*"
+    ],
+    "action": {
+      "default_icon": {
+        "16": "icons/icon16.png",
+        "32": "icons/icon32.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+      }
+    }
+  }

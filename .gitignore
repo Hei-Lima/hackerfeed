@@ -22,7 +22,6 @@
 *.tar
 *.tar.gz
 *.tgz
-*.zip
 
 # Logs and databases #
 ######################
@@ -57,3 +56,6 @@ yarn.lock
 # Personal files #
 ##################
 .env
+page/css/output.css
+
+.venv
