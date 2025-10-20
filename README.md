@@ -1,6 +1,7 @@
 
 [![Chrome Badge](https://img.shields.io/badge/chrome_web_store-version_3.0.3-green?style=for-the-badge&logo=chromewebstore)](https://chromewebstore.google.com/detail/hackerfeed/ipgmacbmlloikoomjkmoknkbalcgmoni)
 [![Firefox Badge](https://img.shields.io/badge/firefox_addons-version_3.0.4-orange?style=for-the-badge&logo=firefoxbrowser)](https://addons.mozilla.org/pt-BR/firefox/addon/hackerfeed/)
+![Version Badge](https://img.shields.io/badge/latest_version-version_3.0.4-blue?style=for-the-badge&logo=github)
 
 <div align="center">
 

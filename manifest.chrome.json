@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
-    "name": "Hackerfeed",
-    "version": "3.0.3",
+    "name": "Hackerfeed for Hacker News",
+    "version": "3.0.0",
     "description": "Replaces the Chrome new tab with Hackerfeed, providing a curated feed of tech news and updates.",
     "icons": {
       "16": "icons/icon16.png",
