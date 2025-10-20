@@ -1,0 +1,64 @@
+name: Update Extension Version Badges
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch: 
+
+jobs:
+  update-badges:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 lxml
+      
+      - name: Get Chrome Web Store version
+        id: chrome-version
+        run: |
+          VERSION=$(python3 .github/workflows/scripts/chrome.py)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Chrome version: $VERSION"
+      
+      - name: Get Mozilla Add-ons version
+        id: mozilla-version
+        run: |
+          VERSION=$(python3 .github/workflows/scripts/mozilla.py)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Mozilla version: $VERSION"
+      
+      - name: Update README badges
+        run: |
+          CHROME_VERSION="${{ steps.chrome-version.outputs.version }}"
+          MOZILLA_VERSION="${{ steps.mozilla-version.outputs.version }}"
+          
+          # Atualiza o README.md com as versões
+          sed -i "s|chrome_web_store-version_[0-9.]*-green|chrome_web_store-version_${CHROME_VERSION}-green|g" README.md
+          sed -i "s|firefox_addons-version_[0-9.]*-orange|firefox_addons-version_${MOZILLA_VERSION}-orange|g" README.md
+          
+          echo "Updated Chrome badge to version: $CHROME_VERSION"
+          echo "Updated Firefox badge to version: $MOZILLA_VERSION"
+      
+      - name: Commit changes (if any)
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          if [[ -n $(git status --porcelain) ]]; then
+            git add README.md
+            git commit -m "chore: update extension version badges [skip ci]"
+            git push
+          else
+            echo "No changes to commit"
+          fi
