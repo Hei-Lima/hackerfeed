@@ -1,5 +1,7 @@
 name: Update Extension Version Badges
-
+permissions:
+  contents: write
+  
 on:
   schedule:
     - cron: '0 0 * * *'
