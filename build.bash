@@ -16,29 +16,24 @@ build_css() {
     npm run build
 }
 
-# Function to archive files (cross-platform fallback)
+# Function to archive files
 archive_files() {
     local archive_name=$1
     if command -v zip >/dev/null 2>&1; then
         echo -e "${BLUE}📦 Archiving using zip...${NC}"
+        rm -f "$archive_name"
         zip -r "$archive_name" \
             manifest.json \
-            icons/* \
+            icons \
             index.html \
-            page/**/* \
+            page \
             LICENSE \
             README.md \
-            -x ".*" \
-            -x "__MACOSX" \
-            -x "*.git*" \
-            -x "node_modules/*" \
-            -x "build.bash" \
-            -x "package-lock.json" \
-            -x "*.xpi" \
-            -x "*.zip" \
-            -x "manifest.*.json"
+            -x "*/.*" \
+            -x "node_modules/*"
     elif command -v tar >/dev/null 2>&1; then
         echo -e "${BLUE}📦 Archiving using tar (fallback)...${NC}"
+        rm -f "$archive_name"
         tar -a -c -f "$archive_name" \
             manifest.json \
             icons \
@@ -46,11 +41,8 @@ archive_files() {
             page \
             LICENSE \
             README.md
-    elif command -v powershell.exe >/dev/null 2>&1; then
-        echo -e "${BLUE}📦 Archiving using PowerShell (fallback)...${NC}"
-        powershell.exe -Command "Compress-Archive -Path manifest.json, icons, index.html, page, LICENSE, README.md -DestinationPath $archive_name -Force"
     else
-        echo -e "${YELLOW}❌ No archive tool found (zip, tar, or powershell.exe). Please archive files manually.${NC}"
+        echo -e "${RED}❌ No archive tool found (zip or tar). Please install zip (e.g., sudo apt install zip).${NC}"
         exit 1
     fi
 }
