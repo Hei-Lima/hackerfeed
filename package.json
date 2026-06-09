@@ -11,6 +11,7 @@
     "daisyui": "^5.0.9"
   },
   "scripts": {
-    "build": "tailwindcss -i ./page/css/input.css -o ./page/css/output.css --watch"
+    "build": "tailwindcss -i ./page/css/input.css -o ./page/css/output.css",
+    "watch": "tailwindcss -i ./page/css/input.css -o ./page/css/output.css --watch"
   }
 }

@@ -4,28 +4,30 @@ document.addEventListener("DOMContentLoaded", function () {
     // Settings Modal
     const settingsButton = document.getElementById("settingsButton");
     const settingsModal = document.getElementById("settings");
-    const cancelBtn = document.getElementById("cancelBtn");
-    const saveBtn = document.getElementById("saveBtn");
 
     settingsButton.addEventListener("click", function () {
+        // Reset dialog returnValue before opening
+        settingsModal.returnValue = "";
         settingsModal.showModal();
     });
 
-    cancelBtn.addEventListener("click", function () {
-        settingsModal.close();
-        applySettings(); 
-    });
-
-    saveBtn.addEventListener("click", function () {
-        saveSettings();
-        settingsModal.close();
+    // Handle closing the dialog (ESC, backdrop click, cancel, save)
+    settingsModal.addEventListener("close", function () {
+        if (settingsModal.returnValue === "save") {
+            saveSettings();
+            // Notify other scripts that settings have been saved
+            window.dispatchEvent(new Event("settingsUpdated"));
+        } else {
+            // Revert preview changes (like fonts) if canceled
+            applySettings(); 
+        }
     });
 
     applySettings(); 
     initializeRangeInputs();
 });
 
-// Pilhas com fallbacks adequados
+// Font stacks with suitable fallbacks
 const FONT_STACKS = {
   "Inter": '"Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
   "Poppins": '"Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
@@ -40,7 +42,7 @@ const FONT_STACKS = {
 function applyFont(selectedFont = localStorage.getItem("selectedFont") || "Inter") {
     const stack = FONT_STACKS[selectedFont] || FONT_STACKS["Inter"];
     
-    // Aplica diretamente no body
+    // Apply font family directly to body
     document.body.style.fontFamily = stack;
     
     const sel = document.getElementById("fontSelect");
@@ -56,10 +58,21 @@ function updatePlaceholders() {
         fetchLimit: localStorage.getItem("fetchLimit") || 21
     };
 
-    document.getElementById("fontSelect").value = settings.font;
-    document.getElementById("fetchTimeInput").placeholder = `Current: ${settings.saveTime}`;
-    document.getElementById("fetchTimeInput").value = settings.saveTime;
-    document.getElementById("fetchLimitInput").value = settings.fetchLimit;
+    const fontSelect = document.getElementById("fontSelect");
+    const fetchTimeInput = document.getElementById("fetchTimeInput");
+    const fetchLimitInput = document.getElementById("fetchLimitInput");
+
+    if (fontSelect) fontSelect.value = settings.font;
+    
+    if (fetchTimeInput) {
+        fetchTimeInput.placeholder = `Current: ${settings.saveTime}`;
+        fetchTimeInput.value = localStorage.getItem("saveTime") || "";
+    }
+    
+    if (fetchLimitInput) {
+        fetchLimitInput.placeholder = `Current: ${settings.fetchLimit}`;
+        fetchLimitInput.value = localStorage.getItem("fetchLimit") || "";
+    }
 }
 
 function initializeRangeInputs() {
@@ -67,43 +80,66 @@ function initializeRangeInputs() {
     const fetchTimeInput = document.getElementById("fetchTimeInput");
     const fetchLimitInput = document.getElementById("fetchLimitInput");
 
-    fontSelect.addEventListener("change", function () {
-        const selectedFont = this.value;
-        console.log(`Font changed to: ${selectedFont}`);
-        applyFont(selectedFont);
-    });
+    if (fontSelect) {
+        fontSelect.addEventListener("change", function () {
+            const selectedFont = this.value;
+            console.log(`Font changed to: ${selectedFont}`);
+            applyFont(selectedFont);
+        });
+    }
 
-    fetchTimeInput.addEventListener("input", function () {
-        this.placeholder = `Current: ${this.value}`;
-    });
+    if (fetchTimeInput) {
+        fetchTimeInput.addEventListener("input", function () {
+            this.placeholder = `Current: ${this.value || (localStorage.getItem("saveTime") || 15)}`;
+        });
+    }
 
-    fetchLimitInput.addEventListener("input", function () {
-        this.placeholder = `Current: ${this.value}`;
-    });
+    if (fetchLimitInput) {
+        fetchLimitInput.addEventListener("input", function () {
+            this.placeholder = `Current: ${this.value || (localStorage.getItem("fetchLimit") || 21)}`;
+        });
+    }
 }
 
 function getFontValue() {
-    return document.getElementById("fontSelect").value;
+    const fontSelect = document.getElementById("fontSelect");
+    return fontSelect ? fontSelect.value : "Inter";
 }
 
 function getFetchLimitValue() {
-    return document.getElementById("fetchLimitInput").value;
+    const fetchLimitInput = document.getElementById("fetchLimitInput");
+    return fetchLimitInput ? fetchLimitInput.value : "";
 }
 
 function getFetchTimeValue() {
-    return document.getElementById("fetchTimeInput").value;
+    const fetchTimeInput = document.getElementById("fetchTimeInput");
+    return fetchTimeInput ? fetchTimeInput.value : "";
 }
 
 function saveSettings() {
     const selectedFont = getFontValue();
-    const saveTime = getFetchTimeValue();
-    const fetchLimit = getFetchLimitValue();
+    const saveTimeRaw = getFetchTimeValue();
+    const fetchLimitRaw = getFetchLimitValue();
+    
+    // Validate Stories Refresh Interval
+    const saveTimeParsed = parseInt(saveTimeRaw, 10);
+    if (!isNaN(saveTimeParsed) && saveTimeParsed > 0) {
+        localStorage.setItem("saveTime", saveTimeParsed);
+    } else {
+        localStorage.removeItem("saveTime");
+    }
+
+    // Validate Fetch Limit
+    const fetchLimitParsed = parseInt(fetchLimitRaw, 10);
+    if (!isNaN(fetchLimitParsed) && fetchLimitParsed > 0 && fetchLimitParsed <= 50) {
+        localStorage.setItem("fetchLimit", fetchLimitParsed);
+    } else {
+        localStorage.removeItem("fetchLimit");
+    }
     
     localStorage.setItem("selectedFont", selectedFont);
-    localStorage.setItem("saveTime", saveTime);
-    localStorage.setItem("fetchLimit", fetchLimit);
     
-    console.log(`Settings saved: Font=${selectedFont}, Time=${saveTime}, Limit=${fetchLimit}`);
+    console.log(`Settings saved: Font=${selectedFont}, Time=${localStorage.getItem("saveTime")}, Limit=${localStorage.getItem("fetchLimit")}`);
     
     applySettings();
 }
@@ -111,4 +147,4 @@ function saveSettings() {
 function applySettings() {
     applyFont();
     updatePlaceholders();
-}
+}

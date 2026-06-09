@@ -1,7 +1,14 @@
-let rawFetchLimit = localStorage.getItem("fetchLimit");
-let parsedFetchLimit = Number(rawFetchLimit);
-let FETCHLIMIT = !isNaN(parsedFetchLimit) && rawFetchLimit !== null ? parsedFetchLimit : 21;
+let refreshIntervalId = null;
+
+function getStoredFetchLimit() {
+	const rawFetchLimit = localStorage.getItem("fetchLimit");
+	const parsedFetchLimit = parseInt(rawFetchLimit, 10);
+	return !isNaN(parsedFetchLimit) && parsedFetchLimit > 0 && parsedFetchLimit <= 50 ? parsedFetchLimit : 21;
+}
+
+let FETCHLIMIT = getStoredFetchLimit();
 const searchInput = document.getElementById("searchInput");
+
 document.addEventListener("DOMContentLoaded", async function () {
 	async function updateSearchEngines() {
 		try {
@@ -52,13 +59,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 		return !isNaN(parsed) && parsed > 0 ? parsed : DEFAULT_INTERVAL;
 	}
 
-	let intervalMinutes = getStoredInterval();
-
 	// Check if we need to update search engines
 	const lastUpdate = localStorage.getItem("searchEngineUpdateTime");
 	const now = new Date().getTime();
 
-	if (!lastUpdate || now - parseInt(lastUpdate) > 30 * 60 * 1000) {
+	if (!lastUpdate || now - parseInt(lastUpdate, 10) > 30 * 60 * 1000) {
 		await updateSearchEngines();
 	} else {
 		// Use cached engine only for Firefox
@@ -72,21 +77,26 @@ document.addEventListener("DOMContentLoaded", async function () {
 		}
 	}
 
-	setInterval(updateSearchEngines, parseInt(intervalMinutes, 10) * 60 * 1000);
-
 	async function fetchTopStories() {
 		const response = await fetch(
 			"https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty"
 		);
+		if (!response.ok) throw new Error(`HTTP error ${response.status}`);
 		const topStoriesIds = await response.json();
 		return topStoriesIds.slice(0, FETCHLIMIT);
 	}
 
 	async function fetchStory(id) {
-		const response = await fetch(
-			`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
-		);
-		return response.json();
+		try {
+			const response = await fetch(
+				`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
+			);
+			if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+			return await response.json();
+		} catch (error) {
+			console.error(`Failed to fetch story ${id}:`, error);
+			return null;
+		}
 	}
 
 	function getDomain(url) {
@@ -98,22 +108,28 @@ document.addEventListener("DOMContentLoaded", async function () {
 	}
 
 	function displayStory(story) {
+		if (!story) return;
+
 		const storyElement = document.createElement("div");
 		storyElement.className =
 			"card card-lg bg-base-100 p-6 transition duration-200 border border-base-300 hover:border-primary flex flex-col h-full";
 
+		const hasUrl = !!story.url;
+		const storyUrl = hasUrl ? story.url : `https://news.ycombinator.com/item?id=${story.id}`;
+		const domainName = hasUrl ? getDomain(story.url) : "Hacker News";
+
 		const sourceElement = document.createElement("p");
 		sourceElement.className = "text-sm text-base mb-1";
 		const sourceLink = document.createElement("a");
-		sourceLink.href = story.url;
-		sourceLink.textContent = getDomain(story.url);
+		sourceLink.href = storyUrl;
+		sourceLink.textContent = domainName;
 		sourceLink.className = "hover:underline";
 		sourceElement.appendChild(sourceLink);
 
 		const titleElement = document.createElement("h2");
 		titleElement.className = "text-xl font-bold text-base mb-4";
 		const titleLink = document.createElement("a");
-		titleLink.href = story.url;
+		titleLink.href = storyUrl;
 		titleLink.textContent = story.title;
 		titleLink.className = "hover:underline";
 		titleElement.appendChild(titleLink);
@@ -124,15 +140,15 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 		const upvoteElement = document.createElement("span");
 		upvoteElement.className = "font-semibold";
-		upvoteElement.textContent = `${story.score} upvotes`;
+		upvoteElement.textContent = `${story.score || 0} upvotes`;
 
 		const authorElement = document.createElement("span");
-		authorElement.textContent = `by ${story.by}`;
+		authorElement.textContent = `by ${story.by || "unknown"}`;
 
 		const commentsElement = document.createElement("span");
 		const commentsLink = document.createElement("a");
 		commentsLink.href = `https://news.ycombinator.com/item?id=${story.id}`;
-		commentsLink.textContent = `${story.descendants} comments`;
+		commentsLink.textContent = `${story.descendants || 0} comments`;
 		commentsLink.className = "hover:underline";
 		commentsElement.appendChild(commentsLink);
 
@@ -142,7 +158,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 		storyElement.appendChild(sourceElement);
 		storyElement.appendChild(titleElement);
-		storyElement.appendChild(footerElement); // Agora sempre no fundo
+		storyElement.appendChild(footerElement);
 
 		document.getElementById("stories").appendChild(storyElement);
 	}
@@ -198,40 +214,72 @@ document.addEventListener("DOMContentLoaded", async function () {
 			storiesContainer.appendChild(createSkeletonCard());
 		}
 
-		let topStories = JSON.parse(localStorage.getItem("topStories"));
+		let topStories = [];
+		try {
+			topStories = JSON.parse(localStorage.getItem("topStories")) || [];
+		} catch (e) {
+			console.error("Failed to parse cached top stories:", e);
+		}
+
 		const cacheTime = localStorage.getItem("cacheTime");
 		const now = new Date().getTime();
-
-		let fetchInterval = localStorage.getItem("saveTime") ?? 15;
+		const fetchInterval = getStoredInterval();
 
 		if (
 			!topStories ||
+			topStories.length === 0 ||
 			!cacheTime ||
 			now - cacheTime > fetchInterval * 60 * 1000
 		) {
-			const topStoryIds = await fetchTopStories();
-			newTopStories = [];
-			
-			for (const id of topStoryIds) {
-				const cachedStory = topStories?.find(story => story.id === id);
-				if (cachedStory) {
-					newTopStories.push(cachedStory);
-				} else {
-					const story = await fetchStory(id);
-					newTopStories.push(story);
-				}
+			try {
+				const topStoryIds = await fetchTopStories();
+				
+				// Concurrently fetch all stories fresh from the API
+				const storyPromises = topStoryIds.map((id) => fetchStory(id));
+				
+				const fetchedStories = await Promise.all(storyPromises);
+				const newTopStories = fetchedStories.filter(story => story !== null);
+				
+				topStories = newTopStories;
+				localStorage.setItem("topStories", JSON.stringify(newTopStories));
+				localStorage.setItem("cacheTime", now);
+			} catch (error) {
+				console.error("Failed to load top stories from API:", error);
 			}
-			
-			topStories = newTopStories;
-			localStorage.setItem("topStories", JSON.stringify(newTopStories));
-			localStorage.setItem("cacheTime", now);
 		}
 
 		storiesContainer.textContent = "";
-		topStories.forEach((story) => displayStory(story));
+		if (topStories && topStories.length > 0) {
+			topStories.forEach((story) => {
+				if (story) {
+					displayStory(story);
+				}
+			});
+		} else {
+			const errorMsg = document.createElement("div");
+			errorMsg.className = "col-span-full text-center text-secondary py-10";
+			errorMsg.textContent = "Could not load stories. Please check your internet connection.";
+			storiesContainer.appendChild(errorMsg);
+		}
 	}
 
+	function startStoriesRefresh() {
+		if (refreshIntervalId) {
+			clearInterval(refreshIntervalId);
+		}
+		const intervalMinutes = getStoredInterval();
+		refreshIntervalId = setInterval(displayTopStories, intervalMinutes * 60 * 1000);
+	}
+
+	// Dynamic listener for settings changes
+	window.addEventListener("settingsUpdated", () => {
+		FETCHLIMIT = getStoredFetchLimit();
+		startStoriesRefresh();
+		displayTopStories();
+	});
+
 	displayTopStories();
+	startStoriesRefresh();
 });
 
 // Handle search form submission
@@ -264,3 +312,4 @@ document.getElementById("searchForm").addEventListener("submit", async (e) => {
 		)}`;
 	}
 });
+
