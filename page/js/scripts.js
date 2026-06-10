@@ -112,14 +112,14 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 		const storyElement = document.createElement("div");
 		storyElement.className =
-			"card card-lg bg-base-100 p-6 transition duration-200 border border-base-300 hover:border-primary flex flex-col h-full";
+			"card card-lg bg-base-100 p-6 transition-all duration-300 border border-base-300 hover:border-primary hover:-translate-y-1 hover:scale-[1.01] hover:shadow-xl flex flex-col h-full";
 
 		const hasUrl = !!story.url;
 		const storyUrl = hasUrl ? story.url : `https://news.ycombinator.com/item?id=${story.id}`;
 		const domainName = hasUrl ? getDomain(story.url) : "Hacker News";
 
 		const sourceElement = document.createElement("p");
-		sourceElement.className = "text-sm text-base mb-1";
+		sourceElement.className = "text-xs font-semibold text-primary/80 uppercase tracking-wider mb-1.5 select-none";
 		const sourceLink = document.createElement("a");
 		sourceLink.href = storyUrl;
 		sourceLink.textContent = domainName;
@@ -127,29 +127,46 @@ document.addEventListener("DOMContentLoaded", async function () {
 		sourceElement.appendChild(sourceLink);
 
 		const titleElement = document.createElement("h2");
-		titleElement.className = "text-xl font-bold text-base mb-4";
+		titleElement.className = "text-xl font-bold text-base-content mb-4 line-clamp-3 leading-snug";
 		const titleLink = document.createElement("a");
 		titleLink.href = storyUrl;
 		titleLink.textContent = story.title;
-		titleLink.className = "hover:underline";
+		titleLink.className = "hover:text-primary transition-colors duration-200";
 		titleElement.appendChild(titleLink);
 
 		const footerElement = document.createElement("div");
 		footerElement.className =
-			"mt-auto pt-4 border-t border-base-300 text-sm text-secondary flex justify-between items-center";
+			"mt-auto pt-4 border-t border-base-300 text-xs text-secondary flex justify-between items-center gap-2 flex-wrap";
 
-		const upvoteElement = document.createElement("span");
-		upvoteElement.className = "font-semibold";
-		upvoteElement.textContent = `${story.score || 0} upvotes`;
+		const upvoteElement = document.createElement("div");
+		upvoteElement.className = "flex items-center gap-1.5 text-secondary font-medium select-none";
+		upvoteElement.innerHTML = `
+			<svg class="w-3.5 h-3.5 text-primary fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+				<path d="M4 14h6v8h4v-8h6L12 4 4 14z"/>
+			</svg>
+			<span>${story.score || 0}</span>
+		`;
 
-		const authorElement = document.createElement("span");
-		authorElement.textContent = `by ${story.by || "unknown"}`;
+		const authorElement = document.createElement("div");
+		authorElement.className = "text-secondary/70 flex items-center gap-1 select-none font-medium";
+		authorElement.innerHTML = `
+			<svg class="w-3.5 h-3.5 opacity-60 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+				<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+			</svg>
+			<span>by ${story.by || "unknown"}</span>
+		`;
 
-		const commentsElement = document.createElement("span");
+		const commentsElement = document.createElement("div");
+		commentsElement.className = "flex items-center gap-1.5 font-medium";
 		const commentsLink = document.createElement("a");
 		commentsLink.href = `https://news.ycombinator.com/item?id=${story.id}`;
-		commentsLink.textContent = `${story.descendants || 0} comments`;
-		commentsLink.className = "hover:underline";
+		commentsLink.className = "hover:text-primary transition-colors duration-200 flex items-center gap-1.5 text-secondary";
+		commentsLink.innerHTML = `
+			<svg class="w-3.5 h-3.5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+				<path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+			</svg>
+			<span>${story.descendants || 0}</span>
+		`;
 		commentsElement.appendChild(commentsLink);
 
 		footerElement.appendChild(upvoteElement);

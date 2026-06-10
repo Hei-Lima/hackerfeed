@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Notify other scripts that settings have been saved
             window.dispatchEvent(new Event("settingsUpdated"));
         } else {
-            // Revert preview changes (like fonts) if canceled
+            // Revert preview changes (like fonts, gradients) if canceled
             applySettings(); 
         }
     });
@@ -51,16 +51,58 @@ function applyFont(selectedFont = localStorage.getItem("selectedFont") || "Inter
     console.log(`Font applied: ${selectedFont} -> ${stack}`);
 }
 
+function previewGradient(enabled, steps) {
+    const titleEl = document.querySelector("#title h1");
+    if (!titleEl) return;
+
+    titleEl.classList.remove(
+        "text-primary", 
+        "bg-gradient-to-r", 
+        "from-primary", 
+        "via-secondary", 
+        "to-accent", 
+        "to-secondary",
+        "bg-clip-text", 
+        "text-transparent"
+    );
+
+    if (enabled) {
+        titleEl.classList.add(
+            "bg-gradient-to-r", 
+            "from-primary", 
+            "to-accent",
+            "bg-clip-text", 
+            "text-transparent"
+        );
+        if (steps === "3") {
+            titleEl.classList.add("via-secondary");
+        }
+    } else {
+        titleEl.classList.add("text-primary");
+    }
+}
+
+function applyTitleGradient() {
+    const titleGradient = localStorage.getItem("titleGradient") === "true"; // Default is now false
+    const gradientSteps = localStorage.getItem("gradientSteps") || "3";
+    previewGradient(titleGradient, gradientSteps);
+}
+
 function updatePlaceholders() {
     const settings = {
         saveTime: localStorage.getItem("saveTime") || 15,
         font: localStorage.getItem("selectedFont") || "Inter",
-        fetchLimit: localStorage.getItem("fetchLimit") || 21
+        fetchLimit: localStorage.getItem("fetchLimit") || 21,
+        titleGradient: localStorage.getItem("titleGradient") === "true", // Default is now false
+        gradientSteps: localStorage.getItem("gradientSteps") || "3"
     };
 
     const fontSelect = document.getElementById("fontSelect");
     const fetchTimeInput = document.getElementById("fetchTimeInput");
     const fetchLimitInput = document.getElementById("fetchLimitInput");
+    const gradientToggle = document.getElementById("gradientToggle");
+    const gradientStepsSelect = document.getElementById("gradientStepsSelect");
+    const gradientStepsControl = document.getElementById("gradientStepsControl");
 
     if (fontSelect) fontSelect.value = settings.font;
     
@@ -73,12 +115,27 @@ function updatePlaceholders() {
         fetchLimitInput.placeholder = `Current: ${settings.fetchLimit}`;
         fetchLimitInput.value = localStorage.getItem("fetchLimit") || "";
     }
+
+    if (gradientToggle) {
+        gradientToggle.checked = settings.titleGradient;
+    }
+
+    if (gradientStepsSelect) {
+        gradientStepsSelect.value = settings.gradientSteps;
+    }
+
+    if (gradientStepsControl) {
+        gradientStepsControl.style.display = settings.titleGradient ? "block" : "none";
+    }
 }
 
 function initializeRangeInputs() {
     const fontSelect = document.getElementById("fontSelect");
     const fetchTimeInput = document.getElementById("fetchTimeInput");
     const fetchLimitInput = document.getElementById("fetchLimitInput");
+    const gradientToggle = document.getElementById("gradientToggle");
+    const gradientStepsSelect = document.getElementById("gradientStepsSelect");
+    const gradientStepsControl = document.getElementById("gradientStepsControl");
 
     if (fontSelect) {
         fontSelect.addEventListener("change", function () {
@@ -97,6 +154,24 @@ function initializeRangeInputs() {
     if (fetchLimitInput) {
         fetchLimitInput.addEventListener("input", function () {
             this.placeholder = `Current: ${this.value || (localStorage.getItem("fetchLimit") || 21)}`;
+        });
+    }
+
+    if (gradientToggle) {
+        gradientToggle.addEventListener("change", function () {
+            const isChecked = this.checked;
+            if (gradientStepsControl) {
+                gradientStepsControl.style.display = isChecked ? "block" : "none";
+            }
+            const currentSteps = gradientStepsSelect ? gradientStepsSelect.value : "3";
+            previewGradient(isChecked, currentSteps);
+        });
+    }
+
+    if (gradientStepsSelect) {
+        gradientStepsSelect.addEventListener("change", function () {
+            const isEnabled = gradientToggle ? gradientToggle.checked : true;
+            previewGradient(isEnabled, this.value);
         });
     }
 }
@@ -120,6 +195,8 @@ function saveSettings() {
     const selectedFont = getFontValue();
     const saveTimeRaw = getFetchTimeValue();
     const fetchLimitRaw = getFetchLimitValue();
+    const gradientToggle = document.getElementById("gradientToggle");
+    const gradientStepsSelect = document.getElementById("gradientStepsSelect");
     
     // Validate Stories Refresh Interval
     const saveTimeParsed = parseInt(saveTimeRaw, 10);
@@ -138,13 +215,23 @@ function saveSettings() {
     }
     
     localStorage.setItem("selectedFont", selectedFont);
+
+    // Save gradient settings
+    if (gradientToggle) {
+        localStorage.setItem("titleGradient", gradientToggle.checked ? "true" : "false");
+    }
+    if (gradientStepsSelect) {
+        localStorage.setItem("gradientSteps", gradientStepsSelect.value);
+    }
     
-    console.log(`Settings saved: Font=${selectedFont}, Time=${localStorage.getItem("saveTime")}, Limit=${localStorage.getItem("fetchLimit")}`);
+    console.log(`Settings saved: Font=${selectedFont}, Time=${localStorage.getItem("saveTime")}, Limit=${localStorage.getItem("fetchLimit")}, Gradient=${localStorage.getItem("titleGradient")}, Steps=${localStorage.getItem("gradientSteps")}`);
     
     applySettings();
 }
 
 function applySettings() {
     applyFont();
+    applyTitleGradient();
     updatePlaceholders();
-}
+}
+

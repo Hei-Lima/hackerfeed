@@ -12,7 +12,7 @@
   <script src="page/js/index.js"></script>
 </head>
 
-<body class="bg-base-200 flex flex-col min-h-screen" style="font-family: inter;">
+<body class="bg-base-200 flex flex-col min-h-screen transition-all duration-300" style="font-family: inter;">
 	<div id="background-container"></div>
 	<!-- Background container -->
 	<div id="overlay-container"></div>
@@ -201,6 +201,25 @@
 									grid)</span>
 							</label>
 						</div>
+
+						<!-- Title Gradient Toggle -->
+						<div class="form-control">
+							<label class="label cursor-pointer justify-between">
+								<span class="label-text font-medium">Title Text Gradient</span>
+								<input type="checkbox" id="gradientToggle" class="toggle toggle-primary" />
+							</label>
+						</div>
+
+						<!-- Title Gradient Steps Selection -->
+						<div class="form-control" id="gradientStepsControl">
+							<label class="label">
+								<span class="label-text font-medium">Gradient Steps</span>
+							</label>
+							<select class="select select-bordered w-full" id="gradientStepsSelect">
+								<option value="2">2 Steps (Primary → Accent)</option>
+								<option value="3">3 Steps (Primary → Secondary → Accent)</option>
+							</select>
+						</div>
 					</div>
 
 					<!-- Modal Actions -->
@@ -220,12 +239,12 @@
 
 		<main class="flex flex-col items-center flex-grow space-y-12 py-16">
 			<div id="title">
-				<h1 class="text-6xl md:text-8xl font-bold text-primary drop-shadow-md">hackerfeed</h1>    
+				<h1 class="text-6xl md:text-8xl font-black bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent drop-shadow-md select-none tracking-tight">hackerfeed</h1>    
 			</div>
 
 			<form id="searchForm" class="w-full max-w-2xl px-4">
-				<label class="input input-bordered border-base-300 flex items-center gap-3 h-14 text-lg w-full">
-					<svg class="h-7 w-7 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+				<label class="input input-bordered border-base-300 flex items-center gap-3 h-14 text-lg w-full rounded-full bg-base-100/60 backdrop-blur-md transition-all duration-300 focus-within:ring-4 focus-within:ring-primary/20 focus-within:border-primary focus-within:shadow-lg hover:border-base-content/30">
+					<svg class="h-6 w-6 opacity-50 text-base-content" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 						<g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none"
 							stroke="currentColor">
 							<circle cx="11" cy="11" r="8"></circle>
@@ -233,7 +252,7 @@
 						</g>
 					</svg>
 					<input type="search" id="searchInput" placeholder="Search with default engine"
-						class="text-lg w-full" />
+						class="text-lg w-full bg-transparent focus:outline-none" />
 				</label>
 			</form>
 

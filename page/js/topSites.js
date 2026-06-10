@@ -45,23 +45,22 @@ function getFaviconUrl(url) {
 function createSiteCard(site) {
     const card = document.createElement('a');
     card.href = site.url;
-    card.className = "card card-sm drop-shadow-sm hover:drop-shadow-xl duration-200";
-
-    const cardBody = document.createElement('div');
-    cardBody.className = "card-body items-center text-center p-4";
+    card.className = "group flex flex-col items-center select-none w-full transition-all duration-300 hover:-translate-y-1";
 
     const img = document.createElement('img');
     img.src = site.icon;
     img.alt = site.name;
-    img.className = "w-8 h-8 mb-1";
+    img.className = "w-10 h-10 object-contain transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-md";
+    img.onerror = function() {
+        this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="%239ca3af"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>';
+    };
 
-    const title = document.createElement('h2');
-    title.className = "text-sm font-medium truncate-text";
+    const title = document.createElement('span');
+    title.className = "text-xs font-semibold mt-2.5 truncate text-center max-w-[6.5rem] text-secondary group-hover:text-primary transition-colors duration-200";
     title.textContent = site.name;
 
-    cardBody.appendChild(img);
-    cardBody.appendChild(title);
-    card.appendChild(cardBody);
+    card.appendChild(img);
+    card.appendChild(title);
 
     return card;
 }
