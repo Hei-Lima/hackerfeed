@@ -12,7 +12,7 @@ const searchInput = document.getElementById("searchInput");
 document.addEventListener("DOMContentLoaded", async function () {
 	async function updateSearchEngines() {
 		try {
-			if (typeof browser !== "undefined" && browser.search) {
+			if (typeof browser !== "undefined" && browser.search && typeof browser.search.get === "function") {
 				// Firefox
 				const results = await browser.search.get();
 				const defaultEngine = results.find((engine) => engine.isDefault);
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 					);
 					localStorage.setItem("searchEngineUpdateTime", new Date().getTime());
 				}
-			} else if (typeof chrome !== "undefined" && chrome.search) {
+			} else if (typeof chrome !== "undefined" && chrome["search"]) {
 				// Chrome - simple search placeholder
 				searchInput.placeholder = "Search";
 				localStorage.setItem(
@@ -140,33 +140,55 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 		const upvoteElement = document.createElement("div");
 		upvoteElement.className = "flex items-center gap-1.5 text-secondary font-medium select-none";
-		upvoteElement.innerHTML = `
-			<svg class="w-3.5 h-3.5 text-primary fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-				<path d="M4 14h6v8h4v-8h6L12 4 4 14z"/>
-			</svg>
-			<span>${story.score || 0}</span>
-		`;
+
+		const upvoteSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		upvoteSvg.setAttribute("class", "w-3.5 h-3.5 text-primary fill-current");
+		upvoteSvg.setAttribute("viewBox", "0 0 24 24");
+		const upvotePath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+		upvotePath.setAttribute("d", "M4 14h6v8h4v-8h6L12 4 4 14z");
+		upvoteSvg.appendChild(upvotePath);
+
+		const upvoteText = document.createElement("span");
+		upvoteText.textContent = story.score || 0;
+
+		upvoteElement.appendChild(upvoteSvg);
+		upvoteElement.appendChild(upvoteText);
 
 		const authorElement = document.createElement("div");
 		authorElement.className = "text-secondary/70 flex items-center gap-1 select-none font-medium";
-		authorElement.innerHTML = `
-			<svg class="w-3.5 h-3.5 opacity-60 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-				<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-			</svg>
-			<span>by ${story.by || "unknown"}</span>
-		`;
+
+		const authorSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		authorSvg.setAttribute("class", "w-3.5 h-3.5 opacity-60 fill-current");
+		authorSvg.setAttribute("viewBox", "0 0 24 24");
+		const authorPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+		authorPath.setAttribute("d", "M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z");
+		authorSvg.appendChild(authorPath);
+
+		const authorText = document.createElement("span");
+		authorText.textContent = `by ${story.by || "unknown"}`;
+
+		authorElement.appendChild(authorSvg);
+		authorElement.appendChild(authorText);
 
 		const commentsElement = document.createElement("div");
 		commentsElement.className = "flex items-center gap-1.5 font-medium";
+		
 		const commentsLink = document.createElement("a");
 		commentsLink.href = `https://news.ycombinator.com/item?id=${story.id}`;
 		commentsLink.className = "hover:text-primary transition-colors duration-200 flex items-center gap-1.5 text-secondary";
-		commentsLink.innerHTML = `
-			<svg class="w-3.5 h-3.5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-				<path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
-			</svg>
-			<span>${story.descendants || 0}</span>
-		`;
+
+		const commentsSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		commentsSvg.setAttribute("class", "w-3.5 h-3.5 fill-current");
+		commentsSvg.setAttribute("viewBox", "0 0 24 24");
+		const commentsPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+		commentsPath.setAttribute("d", "M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z");
+		commentsSvg.appendChild(commentsPath);
+
+		const commentsText = document.createElement("span");
+		commentsText.textContent = story.descendants || 0;
+
+		commentsLink.appendChild(commentsSvg);
+		commentsLink.appendChild(commentsText);
 		commentsElement.appendChild(commentsLink);
 
 		footerElement.appendChild(upvoteElement);
@@ -305,23 +327,33 @@ document.getElementById("searchForm").addEventListener("submit", async (e) => {
 	const query = searchInput.value;
 
 	try {
-		if (typeof chrome !== "undefined" && chrome.search) {
+		if (typeof chrome !== "undefined" && chrome["search"]) {
 			// Chrome
-			await chrome.search.query({
-				text: query,
-				disposition: "CURRENT_TAB", // Forces search in current tab
-			});
-		} else if (typeof browser !== "undefined" && browser.search) {
-			// Firefox
-			await browser.search.search({
-				query: query,
-			});
-		} else {
-			// Fallback
-			window.location.href = `https://google.com/search?q=${encodeURIComponent(
-				query
-			)}`;
+			const chromeSearch = chrome["search"];
+			if (typeof chromeSearch["query"] === "function") {
+				await chromeSearch["query"]({
+					text: query,
+					disposition: "CURRENT_TAB", // Forces search in current tab
+				});
+				return;
+			}
 		}
+
+		if (typeof browser !== "undefined" && browser["search"]) {
+			// Firefox
+			const browserSearch = browser["search"];
+			if (typeof browserSearch["search"] === "function") {
+				await browserSearch["search"]({
+					query: query,
+				});
+				return;
+			}
+		}
+
+		// Fallback
+		window.location.href = `https://google.com/search?q=${encodeURIComponent(
+			query
+		)}`;
 	} catch (error) {
 		console.error("Search failed:", error);
 		window.location.href = `https://google.com/search?q=${encodeURIComponent(
